@@ -25,4 +25,21 @@ import java.util.ArrayList;
 public class PlayList {
     private String nombre;
     private ArrayList<Song> canciones;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public ArrayList<Song> getCanciones() {
+        return canciones;
+    }
+
+    public void setCanciones(ArrayList<Song> canciones) {
+        this.canciones = canciones;
+    }
+    
 }

@@ -17,14 +17,16 @@
 package View;
 
 import Controller.Controller;
+import Model.Song;
 import com.coti.tools.Esdia;
+import java.util.ArrayList;
 
 /**
  *
  * @author jorgecruz@usal.es
  */
 public class View {
-    Controller c;
+    private Controller c;
 
     public void runMenuPrincipal(String string, String[] opciones) {
         boolean finish = false;
@@ -183,7 +185,13 @@ public class View {
     }
 
     private void imprimirCanciones() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Song> cancionesTemp;
+        c.sortCanciones();
+        cancionesTemp = c.getCanciones();
+        for (Song cancion: cancionesTemp) {
+            System.out.printf("%s\n", cancion.toString());
+        }
+        
     }
 
     private void pedirExportacionArtistas() {

@@ -17,6 +17,8 @@
 package Controller;
 
 import Model.Model;
+import Model.Song;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,4 +26,13 @@ import Model.Model;
  */
 public class Controller {
     Model m;
+
+    public void sortCanciones() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ArrayList<Song> getCanciones() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

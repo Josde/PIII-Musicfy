@@ -16,6 +16,7 @@
  */
 package Model;
 
+import static java.lang.String.format;
 import java.util.ArrayList;
 
 /**
@@ -27,4 +28,52 @@ public class Song {
     private int anno;
     private int duracion;
     private ArrayList<Artist> interpretes;
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public int getAnno() {
+        return anno;
+    }
+
+    public void setAnno(int anno) {
+        this.anno = anno;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
+    }
+
+    public ArrayList<Artist> getInterpretes() {
+        return interpretes;
+    }
+
+    public void setInterpretes(ArrayList<Artist> interpretes) {
+        this.interpretes = interpretes;
+    }
+
+    @Override
+    public String toString() {
+        String ret;
+        StringBuilder sb = new StringBuilder();
+        for (Artist a: this.interpretes) {
+            sb.append(a.getNombre());
+            if (this.interpretes.indexOf(a) != this.interpretes.size() - 1) {
+                sb.append(", "); //Ponemos una coma, si no es el último cantante.
+            }
+        }
+        ret = format("%s - %s | %s | %s", sb, this.titulo, this.duracion, this.titulo);
+        return ret;
+    }
+    
+    
 }

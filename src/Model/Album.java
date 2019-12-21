@@ -30,4 +30,53 @@ public class Album {
     private int duracion;
     private ArrayList<Song> canciones;
     private Tipo tipo;
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public ArrayList<Artist> getInterpretes() {
+        return interpretes;
+    }
+
+    public void setInterpretes(ArrayList<Artist> interpretes) {
+        this.interpretes = interpretes;
+    }
+
+    public int getAnno() {
+        return anno;
+    }
+
+    public void setAnno(int anno) {
+        this.anno = anno;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
+    }
+
+    public ArrayList<Song> getCanciones() {
+        return canciones;
+    }
+
+    public void setCanciones(ArrayList<Song> canciones) {
+        this.canciones = canciones;
+    }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
+    
 }

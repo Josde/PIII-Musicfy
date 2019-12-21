@@ -19,6 +19,8 @@ package Model;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import Other.Constants;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -37,7 +39,8 @@ public class Musicfy {
     public void serializarMusicfy() {
         try {
             FileOutputStream archivoSalida = new FileOutputStream(Other.Constants.RUTA_MUSICFY_BIN.toString());
-            ObjectOutputStream salida = new ObjectOutputStream(archivoSalida);
+            BufferedOutputStream bosSalida = new BufferedOutputStream(archivoSalida);
+            ObjectOutputStream salida = new ObjectOutputStream(bosSalida);
             salida.writeObject(this);
             salida.close();
             archivoSalida.close();
@@ -50,7 +53,8 @@ public class Musicfy {
         Musicfy m = null;
         try {
             FileInputStream archivoEntrada = new FileInputStream(Other.Constants.RUTA_MUSICFY_BIN.toString());
-            ObjectInputStream entrada = new ObjectInputStream(archivoEntrada);
+            BufferedInputStream bosEntrada = new BufferedInputStream(archivoEntrada);
+            ObjectInputStream entrada = new ObjectInputStream(bosEntrada);
             m = (Musicfy) entrada.readObject();
             entrada.close();
             archivoEntrada.close();
