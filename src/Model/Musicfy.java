@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import Other.Constants;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -30,39 +31,48 @@ import java.io.ObjectOutputStream;
  *
  * @author jorgecruz@usal.es
  */
-public class Musicfy {
-    private ArrayList<Song> canciones;
-    private ArrayList<Album> albumes;
-    private ArrayList<Artist> artistas;
-    private ArrayList<PlayList> playlists;
-    
-    public void serializarMusicfy() {
-        try {
-            FileOutputStream archivoSalida = new FileOutputStream(Other.Constants.RUTA_MUSICFY_BIN.toString());
-            BufferedOutputStream bosSalida = new BufferedOutputStream(archivoSalida);
-            ObjectOutputStream salida = new ObjectOutputStream(bosSalida);
-            salida.writeObject(this);
-            salida.close();
-            archivoSalida.close();
-        } catch (IOException i) {
-            i.printStackTrace();
+public class Musicfy implements java.io.Serializable {
+    private ArrayList<Song> canciones = new ArrayList<Song>();
+    private ArrayList<Album> albumes = new ArrayList<Album>();
+    private ArrayList<Artist> artistas = new ArrayList<Artist>();
+    private ArrayList<PlayList> playlists = new ArrayList<PlayList>();
+
+    public ArrayList<Song> getCanciones() {
+        return canciones;
+    }
+
+    public void setCanciones(ArrayList<Song> canciones) {
+        this.canciones = canciones;
+    }
+
+    public ArrayList<Album> getAlbumes() {
+        return albumes;
+    }
+
+    public void setAlbumes(ArrayList<Album> albumes) {
+        this.albumes = albumes;
+    }
+
+    public ArrayList<Artist> getArtistas() {
+        return artistas;
+    }
+
+    public void setArtistas(ArrayList<Artist> artistas) {
+        this.artistas = artistas;
+    }
+
+    public ArrayList<PlayList> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(ArrayList<PlayList> playlists) {
+        this.playlists = playlists;
+    }
+
+    void anadirCanciones(ArrayList<Song> canciones) {
+        for (Song s: canciones) {
+            this.canciones.add(s);
         }
     }
     
-    public void deserializarMusicfy() {
-        Musicfy m = null;
-        try {
-            FileInputStream archivoEntrada = new FileInputStream(Other.Constants.RUTA_MUSICFY_BIN.toString());
-            BufferedInputStream bosEntrada = new BufferedInputStream(archivoEntrada);
-            ObjectInputStream entrada = new ObjectInputStream(bosEntrada);
-            m = (Musicfy) entrada.readObject();
-            entrada.close();
-            archivoEntrada.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-        } catch (ClassNotFoundException c) {
-            System.err.println("Clase no encontrada en el archivo.");
-            c.printStackTrace();
-        }
-    }
 }

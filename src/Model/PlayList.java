@@ -17,14 +17,14 @@
 package Model;
 
 import java.util.ArrayList;
-
+import static java.lang.String.format;
 /**
  *
  * @author jorgecruz@usal.es
  */
 public class PlayList {
     private String nombre;
-    private ArrayList<Song> canciones;
+    private ArrayList<Song> canciones = new ArrayList<Song>();
 
     public String getNombre() {
         return nombre;
@@ -41,5 +41,28 @@ public class PlayList {
     public void setCanciones(ArrayList<Song> canciones) {
         this.canciones = canciones;
     }
+
+    @Override
+    public String toString() {
+        String ret;
+        StringBuilder sb = new StringBuilder();
+        for (Song s: this.canciones) {
+            sb.append(s.toString());
+            sb.append("\n");
+        }
+        ret = format("%s\n---------------------\n%s\n", this.nombre, sb);
+        return ret;
+    }
+
+    public void anadirCancion(Song s) {
+        if (s != null) {
+            this.canciones.add(s);
+        }
+    }
+
+    public void borrarCancion(Song s) {
+        this.canciones.remove(s);
+    }
+    
     
 }

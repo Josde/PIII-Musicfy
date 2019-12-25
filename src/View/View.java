@@ -17,8 +17,12 @@
 package View;
 
 import Controller.Controller;
+import Model.Album;
+import Model.Artist;
+import Model.PlayList;
 import Model.Song;
 import com.coti.tools.Esdia;
+import static java.lang.String.format;
 import java.util.ArrayList;
 
 /**
@@ -26,7 +30,7 @@ import java.util.ArrayList;
  * @author jorgecruz@usal.es
  */
 public class View {
-    private Controller c;
+    Controller c = new Controller();
 
     public void runMenuPrincipal(String string, String[] opciones) {
         boolean finish = false;
@@ -51,6 +55,7 @@ public class View {
                     break;
                 case "6": 
                     this.imprimirCanciones();
+                    break;
                 case "q":
                     finish = Esdia.yesOrNo("¿Desea finalizar la ejecucion?");
                     break;
@@ -185,9 +190,11 @@ public class View {
     }
 
     private void imprimirCanciones() {
-        ArrayList<Song> cancionesTemp;
+        ArrayList<Song> cancionesTemp = new ArrayList<Song>();
+        String header = format("%-45s | %-10s | %-10s", "Canción", "Duración", "Año");
         c.sortCanciones();
         cancionesTemp = c.getCanciones();
+        System.out.printf("%s\n", header);
         for (Song cancion: cancionesTemp) {
             System.out.printf("%s\n", cancion.toString());
         }
@@ -215,7 +222,16 @@ public class View {
     }
 
     private void consultarAlbum() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String opcion;
+        Album res;
+        System.out.println("\nCONSULTA DE ALBUMES\n");
+        opcion = Esdia.readString("Introduzca el nombre del álbum a buscar: ");
+        res = c.obtenerAlbumPorNombre(opcion);
+        if (res != null) {
+            System.out.println(res.toString());
+        } else {
+            System.out.printf("Álbum \"%s\" no encontrado.\n", opcion);
+        }
     }
 
     private void anadirArtista() {
@@ -231,19 +247,78 @@ public class View {
     }
 
     private void consultarAlbumesArtista() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String opcion;
+        Artist res;
+        System.out.println("\nCONSULTA DE ALBUMES POR NOMBRE DEL ARTISTA\n");
+        opcion = Esdia.readString("Introduzca el nombre del artista: ");
+        res = c.obtenerArtistaPorNombre(opcion);
+        if (res != null) {
+            System.out.printf("%s\n--------------------\n", opcion.toUpperCase());
+            for (String s: res.getAlbumes()) {
+                System.out.printf("%s\n", s);
+            }
+        } else {
+            System.out.printf("Artista \"%s\" no encontrado.\n", opcion);
+        }
     }
 
     private void anadirPlaylist() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String titulo;
+        int numCanciones;
+        PlayList plTemp;
+        System.out.println("\nCREACIÓN DE PLAYLIST\n");
+        titulo = Esdia.readString("Introduzca el nombre de la playlist: ");
+        numCanciones = Esdia.readInt("Introduzca el número de canciones: ");
+        plTemp = c.generarPlaylistAleatoria(titulo, numCanciones);
+        if (plTemp != null){
+            System.out.printf("%s\n--------------------\n%s", "PLAYLIST CREADA: ", plTemp.toString());
+        } else {
+            System.out.println("Error al crear playlist.\n");
+        }
     }
 
     private void borrarCancionDePlaylist() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String titulo, nombreCancion;
+        PlayList plTemp;
+        System.out.println("\nBORRAR CANCIÓN DE PLAYLIST\n");
+        titulo = Esdia.readString("Introduzca el nombre de la playlist: ");
+        plTemp = c.obtenerPlaylistPorNombre(titulo);
+        if (plTemp != null) {
+            System.out.println(plTemp.toString());
+            nombreCancion = Esdia.readString("Nombre de la canción a borrar: ");
+            if (c.borrarCancionPlaylist(plTemp, nombreCancion) == 1) {
+                System.out.println("\nCanción borrada.\n");
+            } else {
+                System.out.println("\nCanción no encontrada.\n");
+            }
+        } else {
+            System.out.printf("Playlist \"%s\" no encontrada.\n", titulo);
+        }
     }
 
     private void anadirCancionAPlaylist() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String titulo, nombreCancion;
+        PlayList plTemp;
+        Song songTmp;
+        System.out.println("\nAÑADIR CANCIÓN A PLAYLIST\n");
+        titulo = Esdia.readString("Introduzca el nombre de la playlist: ");
+        //TODO: Sustituir esta obtencion de playlist por otro metodo que solo compruebe que existe, ya que solo necesitamos saber si existe.
+        plTemp = c.obtenerPlaylistPorNombre(titulo);
+        if (plTemp != null) {
+            nombreCancion = Esdia.readString("Nombre de la canción a añadir: ");
+            songTmp = c.obtenerCancionPorNombre(nombreCancion);
+            if (songTmp != null) {
+                c.anadirCancionAPlaylist(plTemp, songTmp);
+            } else {
+                System.out.printf("Canción \"%s\" no encontrada.\n", titulo);
+            }
+        } else {
+            System.out.printf("Playlist \"%s\" no encontrada.\n", titulo);
+        }
+    }
+
+    public void pedirImportacion() {
+        c.pedirImportacion();
     }
 
 }

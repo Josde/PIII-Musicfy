@@ -16,23 +16,101 @@
  */
 package Controller;
 
+import Model.Album;
+import Model.Artist;
 import Model.Model;
+import Model.PlayList;
 import Model.Song;
+import Other.ComparadorSong;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Random;
 
 /**
  *
  * @author jorgecruz@usal.es
  */
 public class Controller {
-    Model m;
+    Model m = new Model();
 
     public void sortCanciones() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        m.sortCanciones();
     }
 
     public ArrayList<Song> getCanciones() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return m.getMu().getCanciones();
     }
+
+    public void pedirImportacion() {
+        m.importFromDisk();
+    }
+
+    public Album obtenerAlbumPorNombre(String opcion) {
+        for (Album a: m.getMu().getAlbumes()) {
+            if (a.getTitulo().toLowerCase().equals(opcion.toLowerCase())) {
+                return a;
+            } 
+        }
+        return null;
+    }
+
+    public Artist obtenerArtistaPorNombre(String opcion) {
+        for (Artist a: m.getMu().getArtistas()) {
+            if (a.getNombre().toLowerCase().equals(opcion.toLowerCase())) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public PlayList generarPlaylistAleatoria(String titulo, int numCanciones) {
+        PlayList plTemp = new PlayList();
+        ArrayList<Song> songTmp = this.m.getMu().getCanciones();
+        Random r = new Random();
+        plTemp.setNombre(titulo);
+        for (int i = 0; i < numCanciones; i++) {
+            plTemp.anadirCancion(songTmp.get(r.nextInt(songTmp.size())));
+        }
+        this.m.anadirPlaylist(plTemp);
+        return plTemp;
+    }
+
+    public PlayList obtenerPlaylistPorNombre(String titulo) {
+        for (PlayList p: this.m.getMu().getPlaylists()) {
+            if (p.getNombre().toLowerCase().equals(titulo.toLowerCase())) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public int borrarCancionPlaylist(PlayList plTemp, String nombreCancion) {
+        for (Song s: plTemp.getCanciones()) {
+            if (s.getTitulo().toLowerCase().equals(nombreCancion.toLowerCase())) {
+                plTemp.borrarCancion(s);
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    public Song obtenerCancionPorNombre(String nombreCancion) {
+        for (Song s: this.m.getMu().getCanciones()) {
+            if (s.getTitulo().toLowerCase().equals(nombreCancion.toLowerCase())) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public void anadirCancionAPlaylist(PlayList plTemp, Song songTmp) {
+        //TODO: Posiblemente rehacer esto.
+        for (PlayList p: this.m.getMu().getPlaylists()) {
+            if (p.equals(plTemp)) {
+                p.anadirCancion(songTmp);
+            }
+        }
+    }
+
 
 }

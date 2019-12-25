@@ -16,8 +16,11 @@
  */
 package Model;
 
+import Other.Constants;
 import java.util.ArrayList;
-
+import java.util.Arrays;
+import java.util.List;
+import static java.lang.String.format;
 /**
  *
  * @author jorgecruz@usal.es
@@ -25,9 +28,10 @@ import java.util.ArrayList;
 
 public class Album {
     private String titulo;
-    private ArrayList<Artist> interpretes;
+    private ArrayList<String> interpretes;
     private int anno;
-    private int duracion;
+    private String duracion;
+    private int numCanciones;
     private ArrayList<Song> canciones;
     private Tipo tipo;
 
@@ -39,11 +43,11 @@ public class Album {
         this.titulo = titulo;
     }
 
-    public ArrayList<Artist> getInterpretes() {
+    public ArrayList<String> getInterpretes() {
         return interpretes;
     }
 
-    public void setInterpretes(ArrayList<Artist> interpretes) {
+    public void setInterpretes(ArrayList<String> interpretes) {
         this.interpretes = interpretes;
     }
 
@@ -55,11 +59,11 @@ public class Album {
         this.anno = anno;
     }
 
-    public int getDuracion() {
+    public String getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(int duracion) {
+    public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
 
@@ -78,5 +82,74 @@ public class Album {
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
+
+    public int getNumCanciones() {
+        return numCanciones;
+    }
+
+    public void setNumCanciones(int numCanciones) {
+        this.numCanciones = numCanciones;
+    }
+    
+    //TODO: Implementar los factories de album, artista y song.
+    public static Album factory(String[] s) {
+        Album a = new Album();
+        ArrayList<Song> canciones = new ArrayList<Song>();
+        ArrayList<String> strArtistas = new ArrayList<String>();
+        Song songTmp;
+        String[] strTmp;    
+        a.setTitulo(s[0]);
+        strTmp = s[1].split(";");
+        for (String str: strTmp) {
+            strArtistas.add(str);
+        }
+        a.setInterpretes(strArtistas);
+        a.setAnno(Integer.valueOf(s[2]));
+        //TODO: Arreglar duración.
+        a.setDuracion(s[3]);
+        a.setNumCanciones(Integer.valueOf(s[4]));
+        if (s[5].equals("álbum")) {
+            a.setTipo(Tipo.ALBUM);
+            strTmp = s[6].split(";");
+            for (String str: strTmp) {
+                songTmp = new Song(str, Integer.valueOf(s[2]), s[3], strArtistas);
+                songTmp.setDuracionAleatoria(Constants.MINUTOS_MAX, Constants.MINUTOS_MIN);
+                canciones.add(songTmp);
+            }
+        } else {
+            a.setTipo(Tipo.SENCILLO);
+            songTmp = new Song(s[0], Integer.valueOf(s[2]), s[3], strArtistas);
+            songTmp.setDuracionAleatoria(Constants.MINUTOS_MAX, Constants.MINUTOS_MAX);
+            canciones.add(songTmp);
+        }
+        a.setCanciones(canciones);
+        return a;
+    }
+
+    @Override
+    public String toString() {
+        String ret, tipoTmp;
+        StringBuilder sbArtistas = new StringBuilder();
+        StringBuilder sbCanciones = new StringBuilder();
+        for (String s: this.interpretes) {
+            sbArtistas.append(s);
+            if (this.interpretes.indexOf(s) != this.interpretes.size() - 1) {
+                sbArtistas.append(", ");
+            }
+        }
+        for (Song so: this.canciones) {
+            sbCanciones.append(so.getTitulo());
+            sbCanciones.append("\n");
+        }
+        if (this.tipo == Tipo.ALBUM) {
+            tipoTmp = "Albúm";
+        } else {
+            tipoTmp = "Sencillo";
+        }
+        ret = format("%s - %s | %s | %s | %d canciones | %d\nCanciones:\n %s", sbArtistas, 
+                this.titulo, this.duracion, tipoTmp, this.numCanciones, this.anno,  sbCanciones);
+        return ret;
+    }
+    
     
 }

@@ -16,6 +16,7 @@
  */
 package main;
 
+import Model.Model;
 import View.View;
 
 /**
@@ -23,12 +24,12 @@ import View.View;
  * @author jorgecruz@usal.es
  */
 public class Main {
-    View v;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         View v = new View();
+        v.pedirImportacion();
         String[] opciones = {"1", "2", "3", "4", "5", "6", "q"};
         v.runMenuPrincipal("1. Generación aleatoria" +
                 "\n2. Archivos" +

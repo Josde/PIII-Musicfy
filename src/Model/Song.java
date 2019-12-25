@@ -18,6 +18,7 @@ package Model;
 
 import static java.lang.String.format;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -26,8 +27,8 @@ import java.util.ArrayList;
 public class Song {
     private String titulo;
     private int anno;
-    private int duracion;
-    private ArrayList<Artist> interpretes;
+    private String duracion;
+    private ArrayList<String> interpretes;
 
     public String getTitulo() {
         return titulo;
@@ -45,35 +46,54 @@ public class Song {
         this.anno = anno;
     }
 
-    public int getDuracion() {
+    public String getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(int duracion) {
+    public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
+    
+    public void setDuracionAleatoria(int minutosMax, int minutosMin) {
+        Random r = new Random();
+        int mins = (r.nextInt(minutosMax - 1)) + minutosMin;
+        int secs = (r.nextInt(60));
+        this.duracion = mins + " min " + secs + " seg ";
+    }
 
-    public ArrayList<Artist> getInterpretes() {
+    
+
+    public ArrayList<String> getInterpretes() {
         return interpretes;
     }
 
-    public void setInterpretes(ArrayList<Artist> interpretes) {
+    public void setInterpretes(ArrayList<String> interpretes) {
         this.interpretes = interpretes;
     }
+
+    
 
     @Override
     public String toString() {
         String ret;
         StringBuilder sb = new StringBuilder();
-        for (Artist a: this.interpretes) {
-            sb.append(a.getNombre());
+        for (String a: this.interpretes) {
+            sb.append(a);
             if (this.interpretes.indexOf(a) != this.interpretes.size() - 1) {
                 sb.append(", "); //Ponemos una coma, si no es el último cantante.
             }
         }
-        ret = format("%s - %s | %s | %s", sb, this.titulo, this.duracion, this.titulo);
+        ret = format("%-15s - %-30s | %-10s | %-10d", sb, this.titulo, this.duracion, this.anno);
         return ret;
     }
+
+    public Song(String titulo, int anno, String duracion, ArrayList<String> interpretes) {
+        this.titulo = titulo;
+        this.anno = anno;
+        this.duracion = duracion;
+        this.interpretes = interpretes;
+    }
+    
     
     
 }

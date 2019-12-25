@@ -29,7 +29,7 @@ public class Artist {
     private String twitter;
     private String facebook;
     private String wikipedia;
-    private ArrayList<Album> albumes;
+    private ArrayList<String> albumes;
 
     public String getNombre() {
         return nombre;
@@ -79,12 +79,31 @@ public class Artist {
         this.wikipedia = wikipedia;
     }
 
-    public ArrayList<Album> getAlbumes() {
+    public ArrayList<String> getAlbumes() {
         return albumes;
     }
 
-    public void setAlbumes(ArrayList<Album> albumes) {
+    public void setAlbumes(ArrayList<String> albumes) {
         this.albumes = albumes;
     }
+
     
+    
+    public static Artist factory(String[] s) {
+        Artist a = new Artist();
+        String[] strTmp; 
+        ArrayList<String> albumes = new ArrayList<String>();
+        a.nombre = s[0];
+        a.biografia = s[1];
+        a.instagram = s[2];
+        a.twitter = s[3];
+        a.facebook = s[4];
+        a.wikipedia = s[5];
+        strTmp = s[6].split(";");
+        for (String ss: strTmp) {
+            albumes.add(ss);
+        }
+        a.albumes = albumes;
+        return a;
+    }
 }

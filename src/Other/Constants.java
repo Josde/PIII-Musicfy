@@ -40,5 +40,8 @@ public class Constants {
     public final static Path RUTA_NOMBRES_ARTISTAS = RUTA_ALEATORIOS.resolve("nombresArtistas.txt");
     public final static Path RUTA_NOMBRES_PLAYLISTS = RUTA_ALEATORIOS.resolve("nombresPlaylists.txt");
     public final static Path RUTA_NOMBRES_CANCIONES = RUTA_ALEATORIOS.resolve("titulosCanciones.txt");
+    //Otras constantes
+    public final static int MINUTOS_MAX = 5;
+    public final static int MINUTOS_MIN = 1;
             
 }
