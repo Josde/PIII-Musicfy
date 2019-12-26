@@ -18,6 +18,7 @@ package Model;
 
 import Other.ComparadorAlbum;
 import Other.ComparadorSong;
+import Other.Constants;
 import com.coti.tools.OpMat;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -27,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -118,6 +120,29 @@ public class Model {
 
     public void anadirPlaylist(PlayList plTemp) {
         this.getMu().getPlaylists().add(plTemp);
+    }
+
+    public void exportarArtistas() {
+        ArrayList<String[]> artistas = new ArrayList<String[]>(); //Usamos arraylist porque el num de artistas es variable.
+        for (Artist a : this.getMu().getArtistas()) {
+            artistas.add(a.toStringArray());
+        }
+        String[][] tabla = new String[artistas.size()][];
+        for (int i = 0; i < artistas.size(); i++) {
+            String[] fila = artistas.get(i);
+            tabla[i] = fila;
+        }
+        try {
+            if (!Constants.RUTA_ARTISTAS_COL.toFile().exists()) {
+                Files.createDirectories(Constants.RUTA_ARTISTAS_COL.getParent());
+                Files.createFile(Constants.RUTA_ARTISTAS_COL);
+            }
+            OpMat.exportToDisk(tabla, Constants.RUTA_ARTISTAS_COL.toFile(), "\t");
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }

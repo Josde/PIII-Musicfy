@@ -87,7 +87,22 @@ public class Artist {
         this.albumes = albumes;
     }
 
-    
+    public String[] toStringArray() {
+        StringBuilder sb = new StringBuilder();
+        String[] ret = new String[7];
+        ret[0] = this.nombre;
+        ret[1] = this.biografia;
+        ret[2] = this.instagram;
+        ret[3] = this.twitter;
+        ret[4] = this.facebook;
+        ret[5] = this.wikipedia;
+        for (String s: this.albumes) {
+            sb.append(s);
+            sb.append(";");
+        }
+        ret[6] = sb.toString();
+        return ret;
+    }
     
     public static Artist factory(String[] s) {
         Artist a = new Artist();

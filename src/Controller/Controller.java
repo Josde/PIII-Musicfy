@@ -112,5 +112,9 @@ public class Controller {
         }
     }
 
+    public void pedirExportacionArtistas() {
+        m.exportarArtistas();
+    }
+
 
 }

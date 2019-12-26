@@ -71,8 +71,8 @@ public class View {
 
     private void runMenuArchivos() {
         boolean finish = false;
-        String string = "1. Exportar artistas" + 
-                        "\n2. Exportar álbumes" + 
+        String string = "1. Exportar artistas en formato encolumnado" + 
+                        "\n2. Exportar álbumes a tabla HTML" + 
                         "\nq. Salir al menú principal";
         String[] opciones = {"1", "2", "q"};
         String opcion;
@@ -202,7 +202,9 @@ public class View {
     }
 
     private void pedirExportacionArtistas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("\nEXPORTANDO ARTISTAS EN ARTISTAS.COL\n");
+        c.pedirExportacionArtistas();
+        System.out.println("\nEXPORTACIÓN FINALIZADA\n");
     }
 
     private void pedirExportacionAlbumes() {
