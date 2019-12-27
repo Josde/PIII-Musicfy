@@ -32,6 +32,15 @@ public class Artist implements Serializable {
     private String wikipedia;
     private ArrayList<String> albumes;
 
+    public Artist(String nombre, ArrayList<String> albumes) {
+        this.nombre = nombre;
+        this.biografia = "Biografía no disponible";
+        this.facebook = "@" + nombre + "_fb";
+        this.instagram = "@" + nombre + "_ig";
+        this.twitter = "@" + nombre + "_tw";
+        this.albumes = albumes;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -122,4 +131,21 @@ public class Artist implements Serializable {
         a.albumes = albumes;
         return a;
     }
+
+    public Artist(String nombre) {
+        this.nombre = nombre;
+        this.biografia = "Biografía no disponible";
+        this.facebook = "@" + nombre + "_fb";
+        this.instagram = "@" + nombre + "_ig";
+        this.twitter = "@" + nombre + "_tw";
+        this.albumes = new ArrayList<String>();
+        
+    }
+
+    public Artist() { //Constructor vacío; solo aloca espacio para la lista.
+        this.albumes = new ArrayList<String>();
+    }
+    
+    
+    
 }

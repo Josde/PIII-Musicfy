@@ -154,5 +154,13 @@ public class Model {
             e.printStackTrace();
         }
     }
+
+    public void anadirArtista(Artist a) {
+        this.getMu().getArtistas().add(a);
+    }
+
+    public void borrarArtista(Artist a) {
+        this.getMu().getArtistas().remove(a);
+    }
     
 }

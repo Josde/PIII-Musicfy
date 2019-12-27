@@ -21,6 +21,7 @@ import Model.Album;
 import Model.Artist;
 import Model.PlayList;
 import Model.Song;
+import Other.Auxiliar;
 import com.coti.tools.Esdia;
 import static java.lang.String.format;
 import java.util.ArrayList;
@@ -237,15 +238,81 @@ public class View {
     }
 
     private void anadirArtista() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String nombre;
+        Artist a;
+        ArrayList<String> albumes = new ArrayList<String>();
+        System.out.println("\nADICIÓN DE UN ARTISTA A LA LISTA DE ARTISTAS\n");
+        nombre = Esdia.readString("Introduzca el nombre del artista: ");
+        albumes = Auxiliar.leerStringHastaVacio("\nIntroduzca el nombre de un album, o enter para salir: ");
+        a = new Artist(nombre, albumes);
+        c.anadirArtistaAModelo(a);
     }
 
     private void borrarArtista() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String nombre;
+        ArrayList<String> albumes;
+        Artist a;
+        System.out.println("\nBORRADO DE UN ARTISTA DE LA LISTA DE ARTISTAS\n");
+        nombre = Esdia.readString("Introduzca el nombre del artista: ");
+        a = c.obtenerArtistaPorNombre(nombre);
+        if (a != null) {
+            if (c.borrarArtista(a)) {
+                System.out.printf("Artista %s borrado correctamente.\n", nombre);
+            } else {
+                albumes = a.getAlbumes();
+                for (String s: albumes) {
+                    System.out.println(s);
+                    System.out.println("\n");
+                }
+                System.out.printf("No se ha podido borrar el artista, ya que los álbumes indicados siguen dados de alta en la lista de álbumes.\n");
+            }
+        } else {
+            System.out.printf("Artista %s no encontrado.", nombre);
+        }
     }
 
     private void modificarArtista() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String nombre, opcion, nuevoValor;
+        String[] opciones = {"1", "2", "3", "4", "5", "q"};
+        Artist a;
+        nombre = Esdia.readString("Introduzca el nombre del artista: ");
+        a = c.obtenerArtistaPorNombre(nombre);
+        if (a != null) {
+            System.out.println("Seleccione el campo que quiere modificar.\n");
+            opcion = Esdia.readString("1. Biografía"
+                                    + "\n2. Instagram"
+                                    + "\n3. Twitter"
+                                    + "\n4. Facebook"
+                                    + "\n5. Wikipedia"
+                                    + "\nq. Volver atrás", opciones);
+            nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
+            switch(opcion) {
+                //TODO: Quizas se puede utilizar a? idk
+                case "1":
+                    c.obtenerArtistaPorNombre(nombre).setBiografia(nuevoValor);
+                    break;
+                case "2":
+                    c.obtenerArtistaPorNombre(nombre).setInstagram(nuevoValor);
+                    break;
+                case "3":
+                    c.obtenerArtistaPorNombre(nombre).setTwitter(nuevoValor);
+                    break;
+                case "4":
+                    c.obtenerArtistaPorNombre(nombre).setFacebook(nuevoValor);
+                    break;
+                case "5":
+                    c.obtenerArtistaPorNombre(nombre).setWikipedia(nuevoValor);
+                    break;
+                case "q":
+                    return;
+                default:
+                    System.out.println("Opción incorrecta, no se han realizado cambios.");
+            }
+            
+            
+        } else {
+            System.out.printf("Artista %s no encontrado.", nombre);
+        }
     }
 
     private void consultarAlbumesArtista() {
@@ -325,7 +392,7 @@ public class View {
 
     public void runMenuFinal() {
         boolean opcion;
-        opcion = Esdia.yesOrNo("Desea serializar Musicfy?");
+        opcion = Esdia.yesOrNo("Desea serializar Musicfy antes de salir?");
         if (opcion) {
             c.pedirSerializacion();
         }

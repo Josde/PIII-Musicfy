@@ -132,5 +132,18 @@ public class Controller {
         }
     }
 
+    public void anadirArtistaAModelo(Artist a) {
+        m.anadirArtista(a);
+    }
+    
+    public boolean borrarArtista(Artist a) {
+        if (!a.getAlbumes().isEmpty()) {
+            return false;
+        } else {
+            m.borrarArtista(a);
+            return true;
+        }
+    }
+
 
 }
