@@ -22,6 +22,7 @@ import Other.Constants;
 import com.coti.tools.OpMat;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -43,30 +44,39 @@ public class Model {
     public void importFromDisk() {
         File musicfyBin = Other.Constants.RUTA_MUSICFY_BIN.toFile();
         if (musicfyBin.exists()) {
-            this.deserializarMusicfy(musicfyBin);
-        } else {
-            File albumesTxt = Other.Constants.RUTA_ALBUMES.toFile();
-            File artistasTxt = Other.Constants.RUTA_ARTISTAS.toFile();
             try {
-                String[][] albumes = OpMat.importFromDisk(albumesTxt, "\t");
-                String[][] artistas = OpMat.importFromDisk(artistasTxt, "#");
-                ArrayList<Album> listaAlbum = new ArrayList<Album>();
-                ArrayList<Artist> listaArtista = new ArrayList<Artist>();
-                Album a;
-                for (String[] s: albumes) {
-                    a = Album.factory(s);
-                    listaAlbum.add(a);
-                    //Tambien añadimos cada cancion a la lista de canciones de Musicfy.
-                    this.mu.anadirCanciones(a.getCanciones());
-                }
-                for (String[] s: artistas) {
-                    listaArtista.add(Artist.factory(s));
-                }
-                this.mu.setAlbumes(listaAlbum);
-                this.mu.setArtistas(listaArtista);
-            } catch (Exception e) {
-                e.printStackTrace();
+                this.deserializarMusicfy(musicfyBin);
+                System.out.println("Musicfy deserializado");
+            } catch (IOException e) { //Si el archivo es invalido o cualquier otra cosa, importamos desde los txt.
+                this.importFromDiskTxt();
             }
+        } else { //Si el archivo binario directamente no existe, importamos desde los txt
+            this.importFromDiskTxt();
+        }
+    }
+    
+    public void importFromDiskTxt() {
+        File albumesTxt = Other.Constants.RUTA_ALBUMES.toFile();
+        File artistasTxt = Other.Constants.RUTA_ARTISTAS.toFile();
+        try {
+            String[][] albumes = OpMat.importFromDisk(albumesTxt, "\t");
+            String[][] artistas = OpMat.importFromDisk(artistasTxt, "#");
+            ArrayList<Album> listaAlbum = new ArrayList<Album>();
+            ArrayList<Artist> listaArtista = new ArrayList<Artist>();
+            Album a;
+            for (String[] s: albumes) {
+                a = Album.factory(s);
+                listaAlbum.add(a);
+                //Tambien añadimos cada cancion a la lista de canciones de Musicfy.
+                this.mu.anadirCanciones(a.getCanciones());
+            }
+            for (String[] s: artistas) {
+                listaArtista.add(Artist.factory(s));
+            }
+            this.mu.setAlbumes(listaAlbum);
+            this.mu.setArtistas(listaArtista);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     
@@ -83,7 +93,7 @@ public class Model {
         }
     }
 
-    void deserializarMusicfy(File musicfyBin) {
+    void deserializarMusicfy(File musicfyBin) throws IOException {
         try {
             FileInputStream archivoEntrada = new FileInputStream(musicfyBin);
             BufferedInputStream bosEntrada = new BufferedInputStream(archivoEntrada);
@@ -92,12 +102,12 @@ public class Model {
             entrada.close();
             archivoEntrada.close();
         } catch (IOException i) {
-            System.err.println("Archivo musicfy.bin no encontrado.");
-            i.printStackTrace();
+            System.err.println("Archivo musicfy.bin no encontrado o inválido.");
+            throw i;
         } catch (ClassNotFoundException c) {
-            System.err.println("Clase no encontrada en el archivo.");
+            System.err.println("Clase no encontrada en el archivo binario.");
             c.printStackTrace();
-        }
+        } 
     }
 
     public Musicfy getMu() {

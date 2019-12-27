@@ -16,6 +16,7 @@
  */
 package Model;
 
+import java.io.Serializable;
 import static java.lang.String.format;
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,7 +25,7 @@ import java.util.Random;
  *
  * @author jorgecruz@usal.es
  */
-public class Song {
+public class Song implements Serializable {
     private String titulo;
     private int anno;
     private String duracion;

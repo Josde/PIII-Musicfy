@@ -323,4 +323,12 @@ public class View {
         c.pedirImportacion();
     }
 
+    public void runMenuFinal() {
+        boolean opcion;
+        opcion = Esdia.yesOrNo("Desea serializar Musicfy?");
+        if (opcion) {
+            c.pedirSerializacion();
+        }
+    }
+
 }

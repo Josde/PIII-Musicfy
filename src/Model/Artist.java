@@ -16,13 +16,14 @@
  */
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author jorgecruz@usal.es
  */
-public class Artist {
+public class Artist implements Serializable {
     private String nombre;
     private String biografia;
     private String instagram;

@@ -22,6 +22,8 @@ import Model.Model;
 import Model.PlayList;
 import Model.Song;
 import Other.ComparadorSong;
+import Other.Constants;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
@@ -114,6 +116,20 @@ public class Controller {
 
     public void pedirExportacionArtistas() {
         m.exportarArtistas();
+    }
+
+    public void pedirSerializacion() {
+        if (Constants.RUTA_MUSICFY_BIN.toFile().exists()) {
+            m.serializarMusicfy(Constants.RUTA_MUSICFY_BIN.toFile());
+        } else {
+            try {
+                Files.createDirectories(Constants.RUTA_MUSICFY_BIN.getParent());
+                Files.createFile(Constants.RUTA_MUSICFY_BIN);
+                m.serializarMusicfy(Constants.RUTA_MUSICFY_BIN.toFile());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

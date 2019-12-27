@@ -38,6 +38,7 @@ public class Main {
                 "\n5. PlayList" +
                 "\n6. Canciones" +
                 "\nq. Salir", opciones);
+                v.runMenuFinal();
     }
     
 }

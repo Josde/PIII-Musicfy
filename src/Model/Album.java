@@ -17,6 +17,7 @@
 package Model;
 
 import Other.Constants;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +27,7 @@ import static java.lang.String.format;
  * @author jorgecruz@usal.es
  */
 
-public class Album {
+public class Album implements Serializable {
     private String titulo;
     private ArrayList<String> interpretes;
     private int anno;

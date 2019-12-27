@@ -26,12 +26,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  *
  * @author jorgecruz@usal.es
  */
-public class Musicfy implements java.io.Serializable {
+public class Musicfy implements Serializable {
     private ArrayList<Song> canciones = new ArrayList<Song>();
     private ArrayList<Album> albumes = new ArrayList<Album>();
     private ArrayList<Artist> artistas = new ArrayList<Artist>();

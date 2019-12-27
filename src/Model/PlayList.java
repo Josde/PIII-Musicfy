@@ -16,13 +16,14 @@
  */
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import static java.lang.String.format;
 /**
  *
  * @author jorgecruz@usal.es
  */
-public class PlayList {
+public class PlayList implements Serializable {
     private String nombre;
     private ArrayList<Song> canciones = new ArrayList<Song>();
 
