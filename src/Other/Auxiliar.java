@@ -17,18 +17,27 @@
 
 package Other;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import static java.lang.String.format;
 /**
  *
  * @author Jorge Cruz García (jorgecruz@usal.es)
  */
 public class Auxiliar {
     
+    /**
+     *
+     * @param prompt
+     * @return
+     */
     public static ArrayList<String> leerStringHastaVacio(String prompt) {
         ArrayList<String> strTemp = new ArrayList<String>();
         String tmpLine;
@@ -43,6 +52,11 @@ public class Auxiliar {
         return strTemp;
     }
 
+    /**
+     *
+     * @param rutaALeer
+     * @return
+     */
     public static String[] leerLineasEnArray(Path rutaALeer) {
         List<String> strTmp = new ArrayList<String>();
         if (!rutaALeer.toFile().exists()) {
@@ -60,5 +74,36 @@ public class Auxiliar {
             i.printStackTrace();
             return null;
         }
+    }
+    
+    /**
+     *
+     * @param sb
+     * @param tag
+     * @param elemento
+     */
+    public static void anadirTag(StringBuilder sb, String tag, String elemento) {
+        sb.append("<").append(tag).append(">");
+        sb.append(elemento);
+        sb.append("</").append(tag).append(">");
+        sb.append("\n");
+    }
+    
+    /**
+     *
+     * @param sb
+     * @param elemento
+     */
+    public static void anadirHeader(StringBuilder sb, String elemento) {
+        anadirTag(sb, "th", elemento);
+    }
+    
+    /**
+     *
+     * @param sb
+     * @param elemento
+     */
+    public static void anadirDato(StringBuilder sb, String elemento) {
+        anadirTag(sb, "td", elemento);
     }
 }

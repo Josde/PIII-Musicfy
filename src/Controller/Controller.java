@@ -37,18 +37,33 @@ import java.util.Random;
 public class Controller {
     Model m = new Model();
 
+    /**
+     *
+     */
     public void sortCanciones() {
         m.sortCanciones();
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Song> getCanciones() {
         return m.getMu().getCanciones();
     }
 
+    /**
+     *
+     */
     public void pedirImportacion() {
         m.importFromDisk();
     }
 
+    /**
+     *
+     * @param opcion
+     * @return
+     */
     public Album obtenerAlbumPorNombre(String opcion) {
         for (Album a: m.getMu().getAlbumes()) {
             if (a.getTitulo().toLowerCase().equals(opcion.toLowerCase())) {
@@ -58,6 +73,11 @@ public class Controller {
         return null;
     }
 
+    /**
+     *
+     * @param opcion
+     * @return
+     */
     public Artist obtenerArtistaPorNombre(String opcion) {
         for (Artist a: m.getMu().getArtistas()) {
             if (a.getNombre().toLowerCase().equals(opcion.toLowerCase())) {
@@ -67,6 +87,12 @@ public class Controller {
         return null;
     }
 
+    /**
+     *
+     * @param titulo
+     * @param numCanciones
+     * @return
+     */
     public PlayList generarPlaylistAleatoria(String titulo, int numCanciones) {
         PlayList plTemp = new PlayList();
         ArrayList<Song> songTmp = this.m.getMu().getCanciones();
@@ -79,6 +105,11 @@ public class Controller {
         return plTemp;
     }
 
+    /**
+     *
+     * @param titulo
+     * @return
+     */
     public PlayList obtenerPlaylistPorNombre(String titulo) {
         for (PlayList p: this.m.getMu().getPlaylists()) {
             if (p.getNombre().toLowerCase().equals(titulo.toLowerCase())) {
@@ -88,6 +119,12 @@ public class Controller {
         return null;
     }
 
+    /**
+     *
+     * @param plTemp
+     * @param nombreCancion
+     * @return
+     */
     public int borrarCancionPlaylist(PlayList plTemp, String nombreCancion) {
         for (Song s: plTemp.getCanciones()) {
             if (s.getTitulo().toLowerCase().equals(nombreCancion.toLowerCase())) {
@@ -98,6 +135,11 @@ public class Controller {
         return 0;
     }
 
+    /**
+     *
+     * @param nombreCancion
+     * @return
+     */
     public Song obtenerCancionPorNombre(String nombreCancion) {
         for (Song s: this.m.getMu().getCanciones()) {
             if (s.getTitulo().toLowerCase().equals(nombreCancion.toLowerCase())) {
@@ -107,6 +149,12 @@ public class Controller {
         return null;
     }
 
+    /**
+     *
+     * @param plTemp
+     * @param songTmp
+     * @return
+     */
     public boolean anadirCancionAPlaylist(PlayList plTemp, Song songTmp) {
         //TODO: Posiblemente rehacer esto.
         if (plTemp != null && songTmp != null) {
@@ -120,10 +168,17 @@ public class Controller {
         return false;
     }
 
-    public void pedirExportacionArtistas() {
-        m.exportarArtistas();
+    /**
+     *
+     * @return
+     */
+    public boolean pedirExportacionArtistas() {
+        return m.exportarArtistas();
     }
 
+    /**
+     *
+     */
     public void pedirSerializacion() {
         if (Constants.RUTA_MUSICFY_BIN.toFile().exists()) {
             m.serializarMusicfy(Constants.RUTA_MUSICFY_BIN.toFile());
@@ -138,6 +193,11 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     * @param a
+     * @return
+     */
     public boolean anadirArtistaAModelo(Artist a) {
         if (a != null) {
             m.anadirArtista(a);
@@ -146,6 +206,11 @@ public class Controller {
         return false;
     }
     
+    /**
+     *
+     * @param a
+     * @return
+     */
     public boolean borrarArtista(Artist a) {
         if (!a.getAlbumes().isEmpty()) {
             return false;
@@ -155,6 +220,13 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     * @param a
+     * @param nuevoValor
+     * @param opcion
+     * @return
+     */
     public boolean cambiarAtributoArtista(Artist a, String nuevoValor, String opcion) {
         if (a != null) {
             switch(opcion) {
@@ -180,6 +252,11 @@ public class Controller {
         return false;
     }
 
+    /**
+     *
+     * @param a
+     * @return
+     */
     public boolean anadirAlbumAModelo(Album a) {
         if (a != null) {
             m.anadirAlbum(a);
@@ -188,7 +265,11 @@ public class Controller {
         return false;
     }
 
-
+    /**
+     *
+     * @param so
+     * @return
+     */
     public boolean anadirCancionAModelo(Song so) {
         if (so != null) {
             m.anadirCancion(so);
@@ -197,6 +278,12 @@ public class Controller {
         return false;
     }
 
+    /**
+     *
+     * @param a
+     * @param ar
+     * @return
+     */
     public boolean borrarAlbumDeArtista(Album a, Artist ar) {
         if (a != null && ar != null) {
             ar.getAlbumes().remove(a.getTitulo());
@@ -205,6 +292,11 @@ public class Controller {
         return false;
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     public boolean borrarCancionDeModelo(Song s) {
         if (s != null) {
             m.borrarCancion(s);
@@ -213,6 +305,11 @@ public class Controller {
         return false;
     }
 
+    /**
+     *
+     * @param a
+     * @return
+     */
     public boolean borrarAlbumDeModelo(Album a) {
         if (a != null) {
             m.borrarAlbum(a);
@@ -221,6 +318,13 @@ public class Controller {
         return false;
     }
 
+    /**
+     *
+     * @param a
+     * @param nuevoValor
+     * @param opcion
+     * @return
+     */
     public boolean cambiarAtributoAlbum(Album a, String nuevoValor, String opcion) {
         if (a != null) {
             switch(opcion) {
@@ -237,10 +341,21 @@ public class Controller {
         return false;
     }
 
+    /**
+     *
+     */
     public void vaciarColecciones() {
         m.vaciarColecciones();
     }
 
+    /**
+     *
+     * @param numArtistas
+     * @param numAlbumes
+     * @param numCanciones
+     * @param numPlaylists
+     * @return
+     */
     public boolean generarAleatoriamente(int numArtistas, int numAlbumes, int numCanciones, int numPlaylists) {
         ArrayList<Album> albumesTmp = new ArrayList<Album>();
         ArrayList<Artist> artistasTmp = new ArrayList<Artist>();
@@ -252,6 +367,7 @@ public class Controller {
             Constants.RUTA_NOMBRES_CANCIONES.toFile().exists() &&
             Constants.RUTA_NOMBRES_PLAYLISTS.toFile().exists()) {
             try { 
+                String nombreTmp;
                 String[] nombresAlbumes = Auxiliar.leerLineasEnArray(Constants.RUTA_NOMBRES_ALBUMES);
                 String[] nombresArtistas = Auxiliar.leerLineasEnArray(Constants.RUTA_NOMBRES_ARTISTAS);
                 String[] nombresCanciones = Auxiliar.leerLineasEnArray(Constants.RUTA_NOMBRES_CANCIONES);
@@ -261,16 +377,28 @@ public class Controller {
                     return false;
                 }
                 for (int i = 0; i < numArtistas; i++) {
-                    artistasTmp.add(new Artist(nombresArtistas[r.nextInt(nombresArtistas.length)]));
+                    do {
+                        nombreTmp = nombresArtistas[r.nextInt(nombresArtistas.length)];
+                    } while (nombreTmp.isBlank());
+                    artistasTmp.add(new Artist(nombreTmp));
                 }
                 for (int i = 0; i < numCanciones; i++) {
-                    cancionesTmp.add(new Song(nombresCanciones[r.nextInt(nombresCanciones.length)]));
+                    do {
+                        nombreTmp = nombresCanciones[r.nextInt(nombresCanciones.length)];
+                    } while (nombreTmp.isBlank());
+                    cancionesTmp.add(new Song(nombreTmp));
                 }
                 for (int i = 0; i < numAlbumes; i++) {
-                    albumesTmp.add(new Album(nombresAlbumes[r.nextInt(nombresAlbumes.length)]));
+                    do {
+                        nombreTmp = nombresAlbumes[r.nextInt(nombresAlbumes.length)];
+                    } while (nombreTmp.isBlank());
+                    albumesTmp.add(new Album(nombreTmp));
                 }
                 for (int i = 0; i < numPlaylists; i++) {
-                    playlistsTmp.add(new PlayList(nombresPlaylists[r.nextInt(nombresPlaylists.length)]));
+                    do {
+                        nombreTmp = nombresPlaylists[r.nextInt(nombresPlaylists.length)];
+                    } while (nombreTmp.isBlank());
+                    playlistsTmp.add(new PlayList(nombreTmp));
                 }
                 m.correlacionarDatosYActualizarModelo(albumesTmp, cancionesTmp, artistasTmp, playlistsTmp);
                 return true;
@@ -279,6 +407,38 @@ public class Controller {
             }
         } 
         return false;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Iterable<Album> obtenerAlbumes() {
+        return m.getMu().getAlbumes();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Iterable<Artist> obtenerArtistas() {
+        return m.getMu().getArtistas();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Iterable<PlayList> obtenerPlaylists() {
+        return m.getMu().getPlaylists();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean pedirExportacionAlbumes() {
+        return m.exportarAlbumes();
     }
 
 

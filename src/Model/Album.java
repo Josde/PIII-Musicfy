@@ -38,7 +38,12 @@ public class Album implements Serializable {
     private ArrayList<Song> canciones;
     private Tipo tipo;
 
-
+    /**
+     *
+     * @param nombreArtista
+     * @param nombreAlbum
+     * @param canciones
+     */
     public Album(String nombreArtista, String nombreAlbum, ArrayList<Song> canciones) {
         Random r = new Random();
         this.interpretes = new ArrayList<String>();
@@ -61,6 +66,10 @@ public class Album implements Serializable {
         this.canciones = new ArrayList<Song>();
     }
 
+    /**
+     *
+     * @param nombreAlbum
+     */
     public Album(String nombreAlbum) {
         Random r = new Random();
         this.titulo = nombreAlbum;
@@ -77,63 +86,125 @@ public class Album implements Serializable {
         this.canciones = new ArrayList<Song>();
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTitulo() {
         return titulo;
     }
 
+    /**
+     *
+     * @param titulo
+     */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> getInterpretes() {
         return interpretes;
     }
 
+    /**
+     *
+     * @param interpretes
+     */
     public void setInterpretes(ArrayList<String> interpretes) {
         this.interpretes = interpretes;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAnno() {
         return anno;
     }
 
+    /**
+     *
+     * @param anno
+     */
     public void setAnno(int anno) {
         this.anno = anno;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDuracion() {
         return duracion;
     }
 
+    /**
+     *
+     * @param duracion
+     */
     public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Song> getCanciones() {
         return canciones;
     }
 
+    /**
+     *
+     * @param canciones
+     */
     public void setCanciones(ArrayList<Song> canciones) {
         this.canciones = canciones;
     }
 
+    /**
+     *
+     * @return
+     */
     public Tipo getTipo() {
         return tipo;
     }
 
+    /**
+     *
+     * @param tipo
+     */
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumCanciones() {
         return numCanciones;
     }
 
+    /**
+     *
+     * @param numCanciones
+     */
     public void setNumCanciones(int numCanciones) {
         this.numCanciones = numCanciones;
     }
     
     //TODO: Implementar los factories de album, artista y song.
+
+    /**
+     *
+     * @param s
+     * @return
+     */
     public static Album factory(String[] s) {
         Album a = new Album();
         ArrayList<Song> canciones = new ArrayList<Song>();
@@ -190,6 +261,42 @@ public class Album implements Serializable {
         }
         ret = format("%s - %s | %s | %s | %d canciones | %d\nCanciones:\n %s", sbArtistas, 
                 this.titulo, this.duracion, tipoTmp, this.numCanciones, this.anno,  sbCanciones);
+        return ret;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String[] toStringArray() {
+        StringBuilder sbArtistas = new StringBuilder();
+        StringBuilder sbCanciones = new StringBuilder();
+        String tipoTmp;
+        String[] ret = new String[7];
+        for (String s: this.interpretes) {
+            sbArtistas.append(s);
+            if (this.interpretes.indexOf(s) != this.interpretes.size() - 1) {
+                sbArtistas.append(", ");
+            }
+        }
+        for (Song so: this.canciones) {
+            sbCanciones.append(so.getTitulo());
+            if (this.canciones.indexOf(so) != this.canciones.size() - 1) {
+                sbCanciones.append(";");
+            }
+        }
+        if (this.tipo == Tipo.ALBUM) {
+            tipoTmp = "Albúm";
+        } else {
+            tipoTmp = "Sencillo";
+        }
+        ret[0] = sbArtistas.toString();
+        ret[1] = this.titulo;
+        ret[2] = sbCanciones.toString();
+        ret[3] = Integer.toString(this.anno);
+        ret[4] = Integer.toString(this.numCanciones);
+        ret[5] = this.duracion;
+        ret[6] = tipoTmp;
         return ret;
     }
     

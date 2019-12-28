@@ -32,6 +32,11 @@ public class Artist implements Serializable {
     private String wikipedia;
     private ArrayList<String> albumes;
 
+    /**
+     *
+     * @param nombre
+     * @param albumes
+     */
     public Artist(String nombre, ArrayList<String> albumes) {
         this.nombre = nombre;
         this.biografia = "Biografía no disponible";
@@ -41,62 +46,122 @@ public class Artist implements Serializable {
         this.albumes = albumes;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getBiografia() {
         return biografia;
     }
 
+    /**
+     *
+     * @param biografia
+     */
     public void setBiografia(String biografia) {
         this.biografia = biografia;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getInstagram() {
         return instagram;
     }
 
+    /**
+     *
+     * @param instagram
+     */
     public void setInstagram(String instagram) {
         this.instagram = instagram;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTwitter() {
         return twitter;
     }
 
+    /**
+     *
+     * @param twitter
+     */
     public void setTwitter(String twitter) {
         this.twitter = twitter;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFacebook() {
         return facebook;
     }
 
+    /**
+     *
+     * @param facebook
+     */
     public void setFacebook(String facebook) {
         this.facebook = facebook;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getWikipedia() {
         return wikipedia;
     }
 
+    /**
+     *
+     * @param wikipedia
+     */
     public void setWikipedia(String wikipedia) {
         this.wikipedia = wikipedia;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> getAlbumes() {
         return albumes;
     }
 
+    /**
+     *
+     * @param albumes
+     */
     public void setAlbumes(ArrayList<String> albumes) {
         this.albumes = albumes;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] toStringArray() {
         StringBuilder sb = new StringBuilder();
         String[] ret = new String[7];
@@ -114,6 +179,11 @@ public class Artist implements Serializable {
         return ret;
     }
     
+    /**
+     *
+     * @param s
+     * @return
+     */
     public static Artist factory(String[] s) {
         Artist a = new Artist();
         String[] strTmp; 
@@ -132,6 +202,10 @@ public class Artist implements Serializable {
         return a;
     }
 
+    /**
+     *
+     * @param nombre
+     */
     public Artist(String nombre) {
         this.nombre = nombre;
         this.biografia = "Biografía no disponible";
@@ -142,6 +216,9 @@ public class Artist implements Serializable {
         
     }
 
+    /**
+     *
+     */
     public Artist() { //Constructor vacío; solo aloca espacio para la lista.
         this.albumes = new ArrayList<String>();
     }

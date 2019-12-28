@@ -33,12 +33,21 @@ public class Song implements Serializable {
     private String duracion;
     private ArrayList<String> interpretes;
 
+    /**
+     *
+     * @param nombreArtista
+     * @param s
+     */
     public Song(String nombreArtista, String s) {
         this.interpretes = new ArrayList<String>();
         this.interpretes.add(nombreArtista);
         this.titulo = s;
     }
 
+    /**
+     *
+     * @param nombreCancion
+     */
     public Song(String nombreCancion) {
         Random r = new Random();
         this.titulo = nombreCancion;
@@ -47,30 +56,59 @@ public class Song implements Serializable {
         this.anno = r.nextInt(Calendar.getInstance().get(Calendar.YEAR) - Constants.ANO_MIN) + Constants.ANO_MIN;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTitulo() {
         return titulo;
     }
 
+    /**
+     *
+     * @param titulo
+     */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAnno() {
         return anno;
     }
 
+    /**
+     *
+     * @param anno
+     */
     public void setAnno(int anno) {
         this.anno = anno;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDuracion() {
         return duracion;
     }
 
+    /**
+     *
+     * @param duracion
+     */
     public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
     
+    /**
+     *
+     * @param minutosMax
+     * @param minutosMin
+     */
     public void setDuracionAleatoria(int minutosMax, int minutosMin) {
         Random r = new Random();
         int mins = (r.nextInt(minutosMax - 1)) + minutosMin;
@@ -78,12 +116,18 @@ public class Song implements Serializable {
         this.duracion = mins + " min " + secs + " seg ";
     }
 
-    
-
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> getInterpretes() {
         return interpretes;
     }
 
+    /**
+     *
+     * @param interpretes
+     */
     public void setInterpretes(ArrayList<String> interpretes) {
         this.interpretes = interpretes;
     }
@@ -104,6 +148,13 @@ public class Song implements Serializable {
         return ret;
     }
     
+    /**
+     *
+     * @param titulo
+     * @param anno
+     * @param duracion
+     * @param interpretes
+     */
     public Song(String titulo, int anno, String duracion, ArrayList<String> interpretes) {
         this.titulo = titulo;
         this.anno = anno;

@@ -38,34 +38,66 @@ public class Musicfy implements Serializable {
     private ArrayList<Artist> artistas = new ArrayList<Artist>();
     private ArrayList<PlayList> playlists = new ArrayList<PlayList>();
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Song> getCanciones() {
         return canciones;
     }
 
+    /**
+     *
+     * @param canciones
+     */
     public void setCanciones(ArrayList<Song> canciones) {
         this.canciones = canciones;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Album> getAlbumes() {
         return albumes;
     }
 
+    /**
+     *
+     * @param albumes
+     */
     public void setAlbumes(ArrayList<Album> albumes) {
         this.albumes = albumes;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Artist> getArtistas() {
         return artistas;
     }
 
+    /**
+     *
+     * @param artistas
+     */
     public void setArtistas(ArrayList<Artist> artistas) {
         this.artistas = artistas;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<PlayList> getPlaylists() {
         return playlists;
     }
 
+    /**
+     *
+     * @param playlists
+     */
     public void setPlaylists(ArrayList<PlayList> playlists) {
         this.playlists = playlists;
     }

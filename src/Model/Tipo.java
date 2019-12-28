@@ -22,6 +22,14 @@ package Model;
  * @author Jorge Cruz García (jorgecruz@usal.es)
  */
 public enum Tipo {
+
+    /**
+     *
+     */
     SENCILLO,
+
+    /**
+     *
+     */
     ALBUM
 }

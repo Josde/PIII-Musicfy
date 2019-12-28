@@ -27,27 +27,50 @@ public class PlayList implements Serializable {
     private String nombre;
     private ArrayList<Song> canciones = new ArrayList<Song>();
 
+    /**
+     *
+     * @param nombrePlaylist
+     */
     public PlayList(String nombrePlaylist) {
        this.nombre = nombrePlaylist;
        this.canciones = new ArrayList<Song>();
     }
 
+    /**
+     *
+     */
     public PlayList() {
         this.canciones = new ArrayList<Song>();
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Song> getCanciones() {
         return canciones;
     }
 
+    /**
+     *
+     * @param canciones
+     */
     public void setCanciones(ArrayList<Song> canciones) {
         this.canciones = canciones;
     }
@@ -64,12 +87,20 @@ public class PlayList implements Serializable {
         return ret;
     }
 
+    /**
+     *
+     * @param s
+     */
     public void anadirCancion(Song s) {
         if (s != null) {
             this.canciones.add(s);
         }
     }
 
+    /**
+     *
+     * @param s
+     */
     public void borrarCancion(Song s) {
         this.canciones.remove(s);
     }

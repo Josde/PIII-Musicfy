@@ -25,27 +25,107 @@ import com.coti.tools.Rutas;
  */
 public class Constants {
     //Carpetas
+
+    /**
+     *
+     */
     public final static Path RUTA_MUSICFY = Rutas.pathToFolderOnDesktop("musicfy");
+
+    /**
+     *
+     */
     public final static Path RUTA_BINARIOS = RUTA_MUSICFY.resolve("binarios");
+
+    /**
+     *
+     */
     public final static Path RUTA_DATOS = RUTA_MUSICFY.resolve("datos");
+
+    /**
+     *
+     */
     public final static Path RUTA_SALIDA = RUTA_MUSICFY.resolve("salida");
+
+    /**
+     *
+     */
     public final static Path RUTA_ALEATORIOS = RUTA_MUSICFY.resolve("aleatorios");
     //Archivos
+
+    /**
+     *
+     */
     public final static Path RUTA_MUSICFY_BIN = RUTA_BINARIOS.resolve("musicfy.bin");
+
+    /**
+     *
+     */
     public final static Path RUTA_ALBUMES = RUTA_DATOS.resolve("albumes.txt");
+
+    /**
+     *
+     */
     public final static Path RUTA_ARTISTAS = RUTA_DATOS.resolve("artistas.txt");
+
+    /**
+     *
+     */
     public final static Path RUTA_ARTISTAS_COL = RUTA_SALIDA.resolve("artistas.col");
-    public final static Path RUTA_ARTISTAS_HTML = RUTA_SALIDA.resolve("albumes.html");
+
+    /**
+     *
+     */
+    public final static Path RUTA_ALBUMES_HTML = RUTA_SALIDA.resolve("albumes.html");
+
+    /**
+     *
+     */
     public final static Path RUTA_NOMBRES_ALBUMES = RUTA_ALEATORIOS.resolve("nombresAlbumes.txt");
+
+    /**
+     *
+     */
     public final static Path RUTA_NOMBRES_ARTISTAS = RUTA_ALEATORIOS.resolve("nombresArtistas.txt");
+
+    /**
+     *
+     */
     public final static Path RUTA_NOMBRES_PLAYLISTS = RUTA_ALEATORIOS.resolve("nombresPlaylists.txt");
+
+    /**
+     *
+     */
     public final static Path RUTA_NOMBRES_CANCIONES = RUTA_ALEATORIOS.resolve("titulosCanciones.txt");
     //Otras constantes
+
+    /**
+     *
+     */
     public final static int MINUTOS_MAX = 5; // Minutos maximos que dura una canción con longitud aleatoria.
+
+    /**
+     *
+     */
     public final static int MINUTOS_MIN = 1; // Minutos minimos que dura una cancion con longitud aleatoria.
+
+    /**
+     *
+     */
     public final static int ANO_MIN = 1980; // Año minimo para una cancion generada aleatoriamente.
+
+    /**
+     *
+     */
     public final static int CANCIONES_MAX = 12; // Canciones maximas en un albún generado aleatoriamente.
+
+    /**
+     *
+     */
     public final static int LONG_PLAYLIST_MAX = 25; // Número máximo de canciones por playlist generado aleatoriamente.
+
+    /**
+     *
+     */
     public final static int ALBUMES_MAX = 5; // Álbumes maximos para un artista generado aleatoriamente.
             
 }

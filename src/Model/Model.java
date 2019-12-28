@@ -16,16 +16,19 @@
  */
 package Model;
 
+import Other.Auxiliar;
 import Other.ComparadorAlbum;
 import Other.ComparadorSong;
 import Other.Constants;
 import com.coti.tools.OpMat;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -44,6 +47,10 @@ import java.util.Random;
 public class Model {
     Musicfy mu = new Musicfy();
     //TODO: Añadir exportToDisk.
+
+    /**
+     *
+     */
     public void importFromDisk() {
         File musicfyBin = Other.Constants.RUTA_MUSICFY_BIN.toFile();
         if (musicfyBin.exists()) {
@@ -58,6 +65,9 @@ public class Model {
         }
     }
     
+    /**
+     *
+     */
     public void importFromDiskTxt() {
         File albumesTxt = Other.Constants.RUTA_ALBUMES.toFile();
         File artistasTxt = Other.Constants.RUTA_ARTISTAS.toFile();
@@ -83,6 +93,10 @@ public class Model {
         }
     }
     
+    /**
+     *
+     * @param musicfyBin
+     */
     public void serializarMusicfy(File musicfyBin) {
         try {
             FileOutputStream archivoSalida = new FileOutputStream(musicfyBin);
@@ -113,29 +127,51 @@ public class Model {
         } 
     }
 
+    /**
+     *
+     * @return
+     */
     public Musicfy getMu() {
         return mu;
     }
 
+    /**
+     *
+     * @param mu
+     */
     public void setMu(Musicfy mu) {
         this.mu = mu;
     }
 
+    /**
+     *
+     */
     public void sortCanciones() {
         Comparator<Song> c = new ComparadorSong();
         Collections.sort(this.mu.getCanciones(), c);
     }
     
+    /**
+     *
+     */
     public void sortAlbumes() {
         Comparator<Album> a = new ComparadorAlbum();
         Collections.sort(this.mu.getAlbumes(), a);
     }
 
+    /**
+     *
+     * @param plTemp
+     */
     public void anadirPlaylist(PlayList plTemp) {
         this.getMu().getPlaylists().add(plTemp);
     }
 
-    public void exportarArtistas() {
+    /**
+     *
+     * @return
+     */
+    public boolean exportarArtistas() {
         ArrayList<String[]> artistas = new ArrayList<String[]>(); //Usamos arraylist porque el num de artistas es variable.
         for (Artist a : this.getMu().getArtistas()) {
             artistas.add(a.toStringArray());
@@ -151,37 +187,115 @@ public class Model {
                 Files.createFile(Constants.RUTA_ARTISTAS_COL);
             }
             OpMat.exportToDisk(tabla, Constants.RUTA_ARTISTAS_COL.toFile(), "\t");
+            return true;
         } catch (IOException i) {
             i.printStackTrace();
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public boolean exportarAlbumes() {
+        ArrayList<String[]> albumes = new ArrayList<String[]>(); //Usamos arraylist porque el num de artistas es variable.
+        for (Album a : this.getMu().getAlbumes()) {
+            albumes.add(a.toStringArray());
+        }
+        try {
+            if (!Constants.RUTA_ALBUMES_HTML.toFile().exists()) {
+                Files.createDirectories(Constants.RUTA_ALBUMES_HTML.getParent());
+                Files.createFile(Constants.RUTA_ALBUMES_HTML);
+            }
+            File f = Constants.RUTA_ALBUMES_HTML.toFile();
+            if (!f.exists()) return false;
+            FileWriter fw = new FileWriter(f, false); // Creamos un fileWriter sin append para vaciar el archivo.
+            BufferedWriter bw = new BufferedWriter(fw);
+            String[] header = {"Intérpretes", "Título", "Canciones", "Año", "Nº Canciones", "Duración", "Tipo"};
+            StringBuilder sb = new StringBuilder();
+            sb.append("<style>\n table, td, th { border: 1px solid #000000 }\n</style>");
+            sb.append("<table>");
+            sb.append("<tr>");
+            for (String h : header) {
+                Auxiliar.anadirHeader(sb, h);
+            }
+            sb.append("</tr>");
+            for (String[] s: albumes) {
+                sb.append("<tr>");
+                for (String ss: s) {
+                    Auxiliar.anadirDato(sb, ss);
+                }
+                sb.append("</tr>");
+            }
+            sb.append("</table>");
+            bw.write(sb.toString());
+            bw.close();
+            fw.close();
+            return true;
+        } catch (IOException i) {
+            i.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
+    /**
+     *
+     * @param a
+     */
     public void anadirArtista(Artist a) {
         this.getMu().getArtistas().add(a);
     }
 
+    /**
+     *
+     * @param a
+     */
     public void borrarArtista(Artist a) {
         this.getMu().getArtistas().remove(a);
     }
 
+    /**
+     *
+     * @param so
+     */
     public void anadirCancion(Song so) {
         this.getMu().getCanciones().add(so);
     }
 
+    /**
+     *
+     * @param a
+     */
     public void anadirAlbum(Album a) {
         this.getMu().getAlbumes().add(a);
     }
     
+    /**
+     *
+     * @param so
+     */
     public void borrarCancion(Song so) {
         this.getMu().getCanciones().remove(so);
     }
 
+    /**
+     *
+     * @param a
+     */
     public void borrarAlbum(Album a) {
         this.getMu().getAlbumes().remove(a);
     }
 
+    /**
+     *
+     */
     public void vaciarColecciones() {
         this.getMu().getArtistas().clear();
         this.getMu().getAlbumes().clear();
@@ -189,7 +303,13 @@ public class Model {
         this.getMu().getPlaylists().clear();
     }
 
-
+    /**
+     *
+     * @param albumesTmp
+     * @param cancionesTmp
+     * @param artistasTmp
+     * @param playlistsTmp
+     */
     public void correlacionarDatosYActualizarModelo(ArrayList<Album> albumesTmp, ArrayList<Song> cancionesTmp, ArrayList<Artist> artistasTmp, ArrayList<PlayList> playlistsTmp) {
         Random r = new Random();
         for (Artist a: artistasTmp) {
@@ -199,12 +319,17 @@ public class Model {
             for (int i = 0; i < numAlbumes; i++) {
                 ArrayList<String> interprete = new ArrayList<String>();
                 alb = albumesTmp.get(r.nextInt(albumesTmp.size()));
-                albumes.add(alb);
                 interprete.addAll(Arrays.asList(a.getNombre()));
                 alb.setInterpretes(interprete);
+                albumes.add(alb);
             }
         }
         for (Album a: albumesTmp) {
+            if (a.getInterpretes().isEmpty()) { // Si el álbum no tiene interprete, le asignamos uno.
+                Artist aTmp = artistasTmp.get(r.nextInt(artistasTmp.size()));
+                a.getInterpretes().add(aTmp.getNombre());
+                aTmp.getAlbumes().add(a.getTitulo());
+            }
             ArrayList<Song> songTmp = new ArrayList<Song>();
             Song cancion;
             for (int i = 0; i < a.getNumCanciones(); i++) {
@@ -224,11 +349,18 @@ public class Model {
             }
             p.setCanciones(listaCanciones);
         }
+        for (Song s: cancionesTmp) { //Ultimo bucle, se asegura de que no queden canciones sin interprete
+            if (s.getInterpretes().isEmpty()) {
+                s.getInterpretes().add(artistasTmp.get(r.nextInt(artistasTmp.size())).getNombre());
+            }
+        }
         this.getMu().setPlaylists(playlistsTmp);
         this.getMu().setArtistas(artistasTmp);
         this.getMu().setAlbumes(albumesTmp);
         this.getMu().setCanciones(cancionesTmp);
         
     }
+
+    
     
 }

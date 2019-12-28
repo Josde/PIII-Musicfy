@@ -33,6 +33,11 @@ import java.util.ArrayList;
 public class View {
     Controller c = new Controller();
 
+    /**
+     *
+     * @param string  El prompt a imprimirse con el menu.
+     * @param opciones Las opciones que se pueden meter por teclado.
+     */
     public void runMenuPrincipal(String string, String[] opciones) {
         boolean finish = false;
         String opcion;
@@ -114,8 +119,9 @@ public class View {
                         "\n2. Borrar un álbum" + 
                         "\n3. Modificar un álbum" + 
                         "\n4. Consultar un álbum" + 
+                        "\n5. Imprimir nombres de álbumes" + 
                         "\nq. Salir al menú principal";
-        String[] opciones = {"1", "2", "3", "4", "q"};
+        String[] opciones = {"1", "2", "3", "4", "5", "q"};
         String opcion;
         do {
             opcion = Esdia.readString(string, opciones).toLowerCase();
@@ -132,6 +138,9 @@ public class View {
                 case "4":
                     this.consultarAlbum();
                     break;
+                case "5":
+                    this.imprimirAlbumes();
+                    break;
                 case "q":
                     finish = Esdia.yesOrNo("¿Desea volver al menú principal?");
                     break;
@@ -147,8 +156,9 @@ public class View {
                         "\n2. Borrar un artista" + 
                         "\n3. Modificar un artista" + 
                         "\n4. Listado de albumes de un artista" + 
+                        "\n5. Imprimir nombres de artistas" + 
                         "\nq. Salir al menú principal";
-        String[] opciones = {"1", "2", "3", "4", "q"};
+        String[] opciones = {"1", "2", "3", "4", "5", "q"};
         String opcion;
         do {
             opcion = Esdia.readString(string, opciones).toLowerCase();
@@ -165,6 +175,9 @@ public class View {
                 case "4":
                     this.consultarAlbumesArtista();
                     break;
+                case "5":
+                    this.imprimirArtistas();
+                    break;
                 case "q":
                     finish = Esdia.yesOrNo("¿Desea volver al menú principal?");
                     break;
@@ -179,8 +192,9 @@ public class View {
         String string = "1. Añadir una playlist" + 
                         "\n2. Borrar una canción de una playlist" + 
                         "\n3. Añadir una canción a una playlist" + 
+                        "\n4. Imprimir nombres de playlists" +
                         "\nq. Salir al menú principal";
-        String[] opciones = {"1", "2", "3", "q"};
+        String[] opciones = {"1", "2", "3", "4", "q"};
         String opcion;
         do {
             opcion = Esdia.readString(string, opciones).toLowerCase();
@@ -193,6 +207,9 @@ public class View {
                     break;
                 case "3": 
                     this.anadirCancionAPlaylist();
+                    break;
+                case "4":
+                    this.imprimirPlaylists();
                     break;
                 case "q":
                     finish = Esdia.yesOrNo("¿Desea volver al menú principal?");
@@ -216,13 +233,25 @@ public class View {
     }
 
     private void pedirExportacionArtistas() {
+        boolean ret;
         System.out.println("\nEXPORTANDO ARTISTAS EN ARTISTAS.COL\n");
-        c.pedirExportacionArtistas();
-        System.out.println("\nEXPORTACIÓN FINALIZADA\n");
+        ret = c.pedirExportacionArtistas();
+        if (ret) {
+            System.out.println("\nEXPORTACIÓN FINALIZADA\n");
+        } else {
+            System.out.println("\nEXPORTACIÓN FALLIDA\n");
+        }
     }
 
     private void pedirExportacionAlbumes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean ret;
+        System.out.println("\nEXPORTANDO ALBUMES EN ALBUMES.HTML\n");
+        ret = c.pedirExportacionAlbumes();
+        if (ret) {
+            System.out.println("\nEXPORTACIÓN FINALIZADA\n");
+        } else {
+            System.out.println("\nEXPORTACIÓN FALLIDA\n");
+        }
     }
 
     private void anadirAlbum() {
@@ -478,15 +507,42 @@ public class View {
         }
     }
 
+    /**
+     *
+     */
     public void pedirImportacion() {
         c.pedirImportacion();
     }
 
+    /**
+     *
+     */
     public void runMenuFinal() {
         boolean opcion;
         opcion = Esdia.yesOrNo("Desea serializar Musicfy antes de salir?");
         if (opcion) {
             c.pedirSerializacion();
+        }
+    }
+
+    private void imprimirAlbumes() {
+        System.out.println("\nARTISTAS Y NOMBRES DE TODOS LOS ALBUMES\n");
+        for (Album a: c.obtenerAlbumes()) {
+            System.out.printf("%s - %s\n", a.getInterpretes().toString(), a.getTitulo());
+        }
+    }
+
+    private void imprimirArtistas() {
+        System.out.println("\nNOMBRES DE TODOS LOS ARTISTAS\n");
+        for (Artist a: c.obtenerArtistas()) {
+            System.out.println(a.getNombre());
+        }
+    }
+
+    private void imprimirPlaylists() {
+        System.out.println("\nNOMBRES DE TODAS LAS PLAYLIST\n");
+        for (PlayList p: c.obtenerPlaylists()) {
+            System.out.println(p.getNombre());
         }
     }
 
