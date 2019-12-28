@@ -213,15 +213,84 @@ public class View {
     }
 
     private void anadirAlbum() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String nombreAlbum, nombreArtista;
+        Artist interprete;
+        Album a;
+        ArrayList<String> cancionesStr = new ArrayList<String>();
+        ArrayList<Song> canciones = new ArrayList<Song>();
+        System.out.println("\nADICIÓN DE UN ALBUM A LA LISTA DE ALBUMES\n");
+        nombreArtista = Esdia.readString("Introduzca el nombre del artista: ");
+        interprete = c.obtenerArtistaPorNombre(nombreArtista);
+        if (interprete == null) {
+            interprete = new Artist(nombreArtista);
+            c.anadirArtistaAModelo(interprete);
+        }
+        nombreAlbum = Esdia.readString("Introduzca el nombre del album: ");
+        cancionesStr = Auxiliar.leerStringHastaVacio("\nIntroduzca el nombre de una cancion, o enter para salir: ");
+        for (String s: cancionesStr) {
+            Song so = new Song(nombreArtista, s);
+            canciones.add(so);
+            c.anadirCancionAModelo(so);
+        }
+        a = new Album(nombreArtista, nombreAlbum, canciones);
+        c.anadirAlbumAModelo(a);
     }
 
     private void borrarAlbum() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String nombreAlbum;
+        Album a;
+        Artist ar;
+        System.out.println("\nBORRADO DE UN ALBUM DE LA LISTA DE ALBUMES\n");
+        nombreAlbum = Esdia.readString("Introduzca el nombre del album a borrar: ");
+        a = c.obtenerAlbumPorNombre(nombreAlbum);
+        if (a != null) {
+            ar = c.obtenerArtistaPorNombre(a.getTitulo());
+            if (ar != null) {
+                c.borrarAlbumDeArtista(a, ar);
+            }
+            for (Song s: a.getCanciones()) {
+                c.borrarCancionDeModelo(s);
+            }
+            c.borrarAlbumDeModelo(a);
+        } else {
+            System.out.printf("Álbum \"%s\" no encontrado.\n", nombreAlbum);
+        }
     }
 
     private void modificarAlbum() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String nombre, opcion, nuevoValor;
+        String[] opciones = {"1", "2", "q"};
+        Album a;
+        boolean ret = true;
+        nombre = Esdia.readString("Introduzca el nombre del album que quiere modificar: ");
+        a = c.obtenerAlbumPorNombre(nombre);
+        if (a != null) {
+            System.out.println("Seleccione el campo que quiere modificar.\n");
+            opcion = Esdia.readString("1. Título"
+                                    + "\n2. Año"
+                                    + "\nq. Volver atrás", opciones);
+            switch(opcion) {
+                case "1":
+                    System.out.printf("Título actual: %s\n", a.getTitulo());
+                    nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
+                    ret = c.cambiarAtributoAlbum(a, nuevoValor, opcion);
+                    break;
+                case "2":
+                    System.out.printf("Año actual: %d\n", a.getAnno());
+                    nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
+                    ret = c.cambiarAtributoAlbum(a, nuevoValor, opcion);
+                    break;
+                case "q":
+                    return;
+                default:
+                    System.out.println("Opción incorrecta, no se han realizado cambios.");
+            }
+        } else {
+            System.out.printf("Álbum \"%s\" no encontrado.\n", nombre);
+        }
+        if (!ret) {
+            System.out.println("No se han realizado cambios por un error interno."); //Nunca deberíamos de llegar aquí, pero por si acaso.
+        }
     }
 
     private void consultarAlbum() {
@@ -257,17 +326,16 @@ public class View {
         a = c.obtenerArtistaPorNombre(nombre);
         if (a != null) {
             if (c.borrarArtista(a)) {
-                System.out.printf("Artista %s borrado correctamente.\n", nombre);
+                System.out.printf("Artista \"%s\" borrado correctamente.\n", nombre);
             } else {
                 albumes = a.getAlbumes();
                 for (String s: albumes) {
                     System.out.println(s);
-                    System.out.println("\n");
                 }
                 System.out.printf("No se ha podido borrar el artista, ya que los álbumes indicados siguen dados de alta en la lista de álbumes.\n");
             }
         } else {
-            System.out.printf("Artista %s no encontrado.", nombre);
+            System.out.printf("Artista %s no encontrado.\n", nombre);
         }
     }
 
@@ -275,6 +343,7 @@ public class View {
         String nombre, opcion, nuevoValor;
         String[] opciones = {"1", "2", "3", "4", "5", "q"};
         Artist a;
+        boolean ret = true;
         nombre = Esdia.readString("Introduzca el nombre del artista: ");
         a = c.obtenerArtistaPorNombre(nombre);
         if (a != null) {
@@ -285,33 +354,43 @@ public class View {
                                     + "\n4. Facebook"
                                     + "\n5. Wikipedia"
                                     + "\nq. Volver atrás", opciones);
-            nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
             switch(opcion) {
-                //TODO: Quizas se puede utilizar a? idk
+                //TODO: Quizas habria que hacer esto desde el controlador? idk.
                 case "1":
-                    c.obtenerArtistaPorNombre(nombre).setBiografia(nuevoValor);
+                    System.out.printf("Biografia actual: %s\n", a.getBiografia());
+                    nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
+                    ret = c.cambiarAtributoArtista(a, nuevoValor, opcion);
                     break;
                 case "2":
-                    c.obtenerArtistaPorNombre(nombre).setInstagram(nuevoValor);
+                    System.out.printf("Instagram actual: %s\n", a.getInstagram());
+                    nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
+                    ret = c.cambiarAtributoArtista(a, nuevoValor, opcion);
                     break;
                 case "3":
-                    c.obtenerArtistaPorNombre(nombre).setTwitter(nuevoValor);
+                    System.out.printf("Twitter actual: %s\n", a.getTwitter());
+                    nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
+                    ret =  c.cambiarAtributoArtista(a, nuevoValor, opcion);
                     break;
                 case "4":
-                    c.obtenerArtistaPorNombre(nombre).setFacebook(nuevoValor);
+                    System.out.printf("Facebook actual: %s\n", a.getFacebook());
+                    nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
+                    ret = c.cambiarAtributoArtista(a, nuevoValor, opcion);
                     break;
                 case "5":
-                    c.obtenerArtistaPorNombre(nombre).setWikipedia(nuevoValor);
+                    System.out.printf("Wikipedia actual: %s\n", a.getWikipedia());
+                    nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
+                    ret = c.cambiarAtributoArtista(a, nuevoValor, opcion);
                     break;
                 case "q":
                     return;
                 default:
                     System.out.println("Opción incorrecta, no se han realizado cambios.");
             }
-            
-            
         } else {
-            System.out.printf("Artista %s no encontrado.", nombre);
+            System.out.printf("Artista \"%s\" no encontrado.\n", nombre);
+        }
+        if (!ret) {
+            System.out.println("No se han realizado cambios por un error interno."); //Nunca deberíamos de llegar aquí, pero por si acaso.
         }
     }
 

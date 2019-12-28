@@ -162,5 +162,21 @@ public class Model {
     public void borrarArtista(Artist a) {
         this.getMu().getArtistas().remove(a);
     }
+
+    public void anadirCancion(Song so) {
+        this.getMu().getCanciones().add(so);
+    }
+
+    public void anadirAlbum(Album a) {
+        this.getMu().getAlbumes().add(a);
+    }
+    
+    public void borrarCancion(Song so) {
+        this.getMu().getCanciones().remove(so);
+    }
+
+    public void borrarAlbum(Album a) {
+        this.getMu().getAlbumes().remove(a);
+    }
     
 }

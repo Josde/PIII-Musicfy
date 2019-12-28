@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import static java.lang.String.format;
+import java.util.Calendar;
+import java.util.Random;
 /**
  *
  * @author jorgecruz@usal.es
@@ -35,6 +37,29 @@ public class Album implements Serializable {
     private int numCanciones;
     private ArrayList<Song> canciones;
     private Tipo tipo;
+
+
+    public Album(String nombreArtista, String nombreAlbum, ArrayList<Song> canciones) {
+        Random r = new Random();
+        this.interpretes = new ArrayList<String>();
+        this.interpretes.add(nombreArtista);
+        this.titulo = nombreAlbum;
+        this.canciones = canciones;
+        this.anno = r.nextInt(Calendar.getInstance().get(Calendar.YEAR) - Constants.ANO_MIN) + Constants.ANO_MIN;
+        this.numCanciones = this.canciones.size();
+        this.duracion = (r.nextInt(Constants.MINUTOS_MAX) * this.numCanciones)
+                        + " mins " + r.nextInt(60) + " segs";
+        if (this.canciones.size() > 1) {
+            this.tipo = Tipo.ALBUM;
+        } else {
+            this.tipo = Tipo.SENCILLO;
+        }
+    }
+
+    private Album() {
+        this.interpretes = new ArrayList<String>();
+        this.canciones = new ArrayList<Song>();
+    }
 
     public String getTitulo() {
         return titulo;

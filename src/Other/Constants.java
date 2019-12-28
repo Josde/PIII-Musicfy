@@ -43,5 +43,6 @@ public class Constants {
     //Otras constantes
     public final static int MINUTOS_MAX = 5;
     public final static int MINUTOS_MIN = 1;
+    public static int ANO_MIN = 1980;
             
 }

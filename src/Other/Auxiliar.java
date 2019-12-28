@@ -31,11 +31,12 @@ public class Auxiliar {
         String tmpLine;
         Scanner sc = new Scanner(System.in);
         do {
+            System.out.println(prompt);
             tmpLine = sc.nextLine();
-            if (tmpLine != "") {
-                strTemp.add(tmpLine);
+            if (!tmpLine.equals("")) {
+                strTemp.add(tmpLine.trim());
             }
-        } while (tmpLine != "");
+        } while (!tmpLine.equals(""));
         return strTemp;
     }
 }

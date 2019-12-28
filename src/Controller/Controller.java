@@ -105,13 +105,17 @@ public class Controller {
         return null;
     }
 
-    public void anadirCancionAPlaylist(PlayList plTemp, Song songTmp) {
+    public boolean anadirCancionAPlaylist(PlayList plTemp, Song songTmp) {
         //TODO: Posiblemente rehacer esto.
-        for (PlayList p: this.m.getMu().getPlaylists()) {
-            if (p.equals(plTemp)) {
-                p.anadirCancion(songTmp);
+        if (plTemp != null && songTmp != null) {
+            for (PlayList p: this.m.getMu().getPlaylists()) {
+                if (p.equals(plTemp)) {
+                    p.anadirCancion(songTmp);
+                }
             }
+            return true;
         }
+        return false;
     }
 
     public void pedirExportacionArtistas() {
@@ -132,8 +136,12 @@ public class Controller {
         }
     }
 
-    public void anadirArtistaAModelo(Artist a) {
-        m.anadirArtista(a);
+    public boolean anadirArtistaAModelo(Artist a) {
+        if (a != null) {
+            m.anadirArtista(a);
+            return true;
+        }
+        return false;
     }
     
     public boolean borrarArtista(Artist a) {
@@ -143,6 +151,88 @@ public class Controller {
             m.borrarArtista(a);
             return true;
         }
+    }
+
+    public boolean cambiarAtributoArtista(Artist a, String nuevoValor, String opcion) {
+        if (a != null) {
+            switch(opcion) {
+                case "1":
+                    a.setBiografia(nuevoValor);
+                    return true;
+                case "2":
+                    a.setInstagram(nuevoValor);
+                    return true;
+                case "3":
+                    a.setTwitter(nuevoValor);
+                    return true;
+                case "4":
+                    a.setFacebook(nuevoValor);
+                    return true;
+                case "5":
+                    a.setWikipedia(nuevoValor);
+                    return true;
+                default: //Opción inválida.
+                    return false;
+            }
+        }
+        return false;
+    }
+
+    public boolean anadirAlbumAModelo(Album a) {
+        if (a != null) {
+            m.anadirAlbum(a);
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean anadirCancionAModelo(Song so) {
+        if (so != null) {
+            m.anadirCancion(so);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean borrarAlbumDeArtista(Album a, Artist ar) {
+        if (a != null && ar != null) {
+            ar.getAlbumes().remove(a.getTitulo());
+            return true;
+        }
+        return false;
+    }
+
+    public boolean borrarCancionDeModelo(Song s) {
+        if (s != null) {
+            m.borrarCancion(s);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean borrarAlbumDeModelo(Album a) {
+        if (a != null) {
+            m.borrarAlbum(a);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cambiarAtributoAlbum(Album a, String nuevoValor, String opcion) {
+        if (a != null) {
+            switch(opcion) {
+                case "1":
+                    a.setTitulo(nuevoValor);
+                    return true;
+                case "2":
+                    a.setAnno(Integer.valueOf(nuevoValor));
+                    return true;
+                default:
+                    return false;
+            } 
+        } 
+        return false;
     }
 
 

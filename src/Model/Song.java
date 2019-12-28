@@ -31,6 +31,12 @@ public class Song implements Serializable {
     private String duracion;
     private ArrayList<String> interpretes;
 
+    public Song(String nombreArtista, String s) {
+        this.interpretes = new ArrayList<String>();
+        this.interpretes.add(nombreArtista);
+        this.titulo = s;
+    }
+
     public String getTitulo() {
         return titulo;
     }
@@ -58,7 +64,7 @@ public class Song implements Serializable {
     public void setDuracionAleatoria(int minutosMax, int minutosMin) {
         Random r = new Random();
         int mins = (r.nextInt(minutosMax - 1)) + minutosMin;
-        int secs = (r.nextInt(60));
+        int secs = r.nextInt(60);
         this.duracion = mins + " min " + secs + " seg ";
     }
 
