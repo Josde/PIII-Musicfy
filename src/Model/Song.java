@@ -16,9 +16,11 @@
  */
 package Model;
 
+import Other.Constants;
 import java.io.Serializable;
 import static java.lang.String.format;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 /**
@@ -35,6 +37,14 @@ public class Song implements Serializable {
         this.interpretes = new ArrayList<String>();
         this.interpretes.add(nombreArtista);
         this.titulo = s;
+    }
+
+    public Song(String nombreCancion) {
+        Random r = new Random();
+        this.titulo = nombreCancion;
+        this.interpretes = new ArrayList<String>();
+        this.setDuracionAleatoria(Constants.MINUTOS_MAX, Constants.MINUTOS_MIN);
+        this.anno = r.nextInt(Calendar.getInstance().get(Calendar.YEAR) - Constants.ANO_MIN) + Constants.ANO_MIN;
     }
 
     public String getTitulo() {

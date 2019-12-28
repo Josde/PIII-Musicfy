@@ -17,9 +17,12 @@
 
 package Other;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-
 /**
  *
  * @author Jorge Cruz García (jorgecruz@usal.es)
@@ -38,5 +41,24 @@ public class Auxiliar {
             }
         } while (!tmpLine.equals(""));
         return strTemp;
+    }
+
+    public static String[] leerLineasEnArray(Path rutaALeer) {
+        List<String> strTmp = new ArrayList<String>();
+        if (!rutaALeer.toFile().exists()) {
+            return null;
+        }
+        try {
+            strTmp = Files.readAllLines(rutaALeer);
+            for (String ln: strTmp) {
+                if (ln.isBlank()) {
+                    strTmp.remove(ln);
+                }
+            }
+            return strTmp.toArray(new String[strTmp.size()]);
+        } catch (IOException i) {
+            i.printStackTrace();
+            return null;
+        }
     }
 }

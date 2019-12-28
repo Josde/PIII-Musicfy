@@ -41,8 +41,11 @@ public class Constants {
     public final static Path RUTA_NOMBRES_PLAYLISTS = RUTA_ALEATORIOS.resolve("nombresPlaylists.txt");
     public final static Path RUTA_NOMBRES_CANCIONES = RUTA_ALEATORIOS.resolve("titulosCanciones.txt");
     //Otras constantes
-    public final static int MINUTOS_MAX = 5;
-    public final static int MINUTOS_MIN = 1;
-    public static int ANO_MIN = 1980;
+    public final static int MINUTOS_MAX = 5; // Minutos maximos que dura una canción con longitud aleatoria.
+    public final static int MINUTOS_MIN = 1; // Minutos minimos que dura una cancion con longitud aleatoria.
+    public final static int ANO_MIN = 1980; // Año minimo para una cancion generada aleatoriamente.
+    public final static int CANCIONES_MAX = 12; // Canciones maximas en un albún generado aleatoriamente.
+    public final static int LONG_PLAYLIST_MAX = 25; // Número máximo de canciones por playlist generado aleatoriamente.
+    public final static int ALBUMES_MAX = 5; // Álbumes maximos para un artista generado aleatoriamente.
             
 }

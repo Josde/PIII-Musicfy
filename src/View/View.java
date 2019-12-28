@@ -67,7 +67,20 @@ public class View {
     }
 
     private void pedirGeneracionAleatoria() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean ret;
+        int numArtistas, numAlbumes, numCanciones, numPlaylists;
+        c.vaciarColecciones();
+        numArtistas = Esdia.readInt("Introduzca el número de artistas a generar: ");
+        numAlbumes = Esdia.readInt("Introduzca el número de albumes a generar: ");
+        numCanciones = Esdia.readInt("Introduzca el número de canciones a generar: ");
+        numPlaylists = Esdia.readInt("Introduzca el número de playlists a generar: ");
+        System.out.println("\nGENERANDO ALEATORIAMENTE\n");
+        ret = c.generarAleatoriamente(numArtistas, numAlbumes, numCanciones, numPlaylists);
+        if (ret) {
+            System.out.println("\nGENERACIÓN ALEATORIA EXITOSA\n");
+        } else {
+            System.out.println("Fallo en la generación aleatoria.");
+        }
     }
 
     private void runMenuArchivos() {

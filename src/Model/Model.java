@@ -31,8 +31,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -177,6 +180,55 @@ public class Model {
 
     public void borrarAlbum(Album a) {
         this.getMu().getAlbumes().remove(a);
+    }
+
+    public void vaciarColecciones() {
+        this.getMu().getArtistas().clear();
+        this.getMu().getAlbumes().clear();
+        this.getMu().getCanciones().clear();
+        this.getMu().getPlaylists().clear();
+    }
+
+
+    public void correlacionarDatosYActualizarModelo(ArrayList<Album> albumesTmp, ArrayList<Song> cancionesTmp, ArrayList<Artist> artistasTmp, ArrayList<PlayList> playlistsTmp) {
+        Random r = new Random();
+        for (Artist a: artistasTmp) {
+            ArrayList<Album> albumes = new ArrayList<Album>();
+            Album alb;
+            int numAlbumes = r.nextInt(Constants.ALBUMES_MAX - 1) + 1;
+            for (int i = 0; i < numAlbumes; i++) {
+                ArrayList<String> interprete = new ArrayList<String>();
+                alb = albumesTmp.get(r.nextInt(albumesTmp.size()));
+                albumes.add(alb);
+                interprete.addAll(Arrays.asList(a.getNombre()));
+                alb.setInterpretes(interprete);
+            }
+        }
+        for (Album a: albumesTmp) {
+            ArrayList<Song> songTmp = new ArrayList<Song>();
+            Song cancion;
+            for (int i = 0; i < a.getNumCanciones(); i++) {
+                cancion = cancionesTmp.get(r.nextInt(cancionesTmp.size()));
+                cancion.setInterpretes(a.getInterpretes());
+                songTmp.add(cancion);
+            }
+            a.setCanciones(songTmp);
+        }
+        for (PlayList p: playlistsTmp) {
+            ArrayList<Song> listaCanciones = new ArrayList<Song>();
+            Song cancion;
+            int canciones = r.nextInt(Constants.LONG_PLAYLIST_MAX - 1) + 1;
+            for (int i = 0; i < canciones; i++) {
+                cancion = cancionesTmp.get(r.nextInt(cancionesTmp.size()));
+                listaCanciones.add(cancion);
+            }
+            p.setCanciones(listaCanciones);
+        }
+        this.getMu().setPlaylists(playlistsTmp);
+        this.getMu().setArtistas(artistasTmp);
+        this.getMu().setAlbumes(albumesTmp);
+        this.getMu().setCanciones(cancionesTmp);
+        
     }
     
 }

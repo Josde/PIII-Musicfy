@@ -21,8 +21,10 @@ import Model.Artist;
 import Model.Model;
 import Model.PlayList;
 import Model.Song;
+import Other.Auxiliar;
 import Other.ComparadorSong;
 import Other.Constants;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -231,6 +233,50 @@ public class Controller {
                 default:
                     return false;
             } 
+        } 
+        return false;
+    }
+
+    public void vaciarColecciones() {
+        m.vaciarColecciones();
+    }
+
+    public boolean generarAleatoriamente(int numArtistas, int numAlbumes, int numCanciones, int numPlaylists) {
+        ArrayList<Album> albumesTmp = new ArrayList<Album>();
+        ArrayList<Artist> artistasTmp = new ArrayList<Artist>();
+        ArrayList<Song> cancionesTmp = new ArrayList<Song>();
+        ArrayList<PlayList> playlistsTmp = new ArrayList<PlayList>();
+        Random r = new Random();
+        if (Constants.RUTA_NOMBRES_ALBUMES.toFile().exists() &&
+            Constants.RUTA_NOMBRES_ARTISTAS.toFile().exists() &&
+            Constants.RUTA_NOMBRES_CANCIONES.toFile().exists() &&
+            Constants.RUTA_NOMBRES_PLAYLISTS.toFile().exists()) {
+            try { 
+                String[] nombresAlbumes = Auxiliar.leerLineasEnArray(Constants.RUTA_NOMBRES_ALBUMES);
+                String[] nombresArtistas = Auxiliar.leerLineasEnArray(Constants.RUTA_NOMBRES_ARTISTAS);
+                String[] nombresCanciones = Auxiliar.leerLineasEnArray(Constants.RUTA_NOMBRES_CANCIONES);
+                String[] nombresPlaylists = Auxiliar.leerLineasEnArray(Constants.RUTA_NOMBRES_PLAYLISTS);
+                if (nombresAlbumes == null || nombresArtistas == null ||
+                    nombresCanciones == null || nombresPlaylists == null) {
+                    return false;
+                }
+                for (int i = 0; i < numArtistas; i++) {
+                    artistasTmp.add(new Artist(nombresArtistas[r.nextInt(nombresArtistas.length)]));
+                }
+                for (int i = 0; i < numCanciones; i++) {
+                    cancionesTmp.add(new Song(nombresCanciones[r.nextInt(nombresCanciones.length)]));
+                }
+                for (int i = 0; i < numAlbumes; i++) {
+                    albumesTmp.add(new Album(nombresAlbumes[r.nextInt(nombresAlbumes.length)]));
+                }
+                for (int i = 0; i < numPlaylists; i++) {
+                    playlistsTmp.add(new PlayList(nombresPlaylists[r.nextInt(nombresPlaylists.length)]));
+                }
+                m.correlacionarDatosYActualizarModelo(albumesTmp, cancionesTmp, artistasTmp, playlistsTmp);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } 
         return false;
     }

@@ -61,6 +61,22 @@ public class Album implements Serializable {
         this.canciones = new ArrayList<Song>();
     }
 
+    public Album(String nombreAlbum) {
+        Random r = new Random();
+        this.titulo = nombreAlbum;
+        this.numCanciones = r.nextInt(Constants.CANCIONES_MAX - 1) + 1;
+        if (this.numCanciones > 1) {
+            this.tipo = Tipo.ALBUM;
+        } else {
+            this.tipo = Tipo.SENCILLO;
+        }
+        this.anno = r.nextInt(Calendar.getInstance().get(Calendar.YEAR) - Constants.ANO_MIN) + Constants.ANO_MIN;
+        this.duracion = (r.nextInt(Constants.MINUTOS_MAX) * this.numCanciones)
+                        + " mins " + r.nextInt(60) + " segs";
+        this.interpretes = new ArrayList<String>();
+        this.canciones = new ArrayList<Song>();
+    }
+
     public String getTitulo() {
         return titulo;
     }
