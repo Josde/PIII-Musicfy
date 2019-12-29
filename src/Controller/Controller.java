@@ -23,20 +23,20 @@ import Model.PlayList;
 import Model.Song;
 import Other.Auxiliar;
 import Other.Constants;
+import java.lang.System.Logger;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  *
- * @author jorgecruz@usal.es
+ * @author jorgecruz@usal.es (Jorge Cruz García, DNI: 21740040A)
  */
 public class Controller {
 
     Model m = new Model();
-
     /**
-     * ordena las canciones del modelo, por el orden establecido en el
+     * Ordena las canciones del modelo, por el orden establecido en el
      * comparador de canciones.
      */
     public void sortCanciones() {
@@ -44,7 +44,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Devuelve todas las canciones del modelo.
      * @return devuelve todas las canciones del modelo
      */
     public ArrayList<Song> getCanciones() {
@@ -55,14 +55,14 @@ public class Controller {
      * Pide al model importar los datos del disco duro. El modelo se encarga de
      * todo.
      */
-    public void pedirImportacion() {
-        m.importFromDisk();
+    public int pedirImportacion() {
+        return m.importFromDisk();
     }
 
     /**
-     *
-     * @param opcion el nombre del album que queremos buscar
-     * @return el album si se encuentra, y null si no se encuentra
+     * Devuelve un album de la lista por su nombre.
+     * @param opcion El nombre del album que queremos buscar
+     * @return El album si se encuentra, y null si no se encuentra
      */
     public Album obtenerAlbumPorNombre(String opcion) {
         for (Album a : m.getMu().getAlbumes()) {
@@ -74,9 +74,9 @@ public class Controller {
     }
 
     /**
-     *
-     * @param opcion el nombre del artista que queremos buscar
-     * @return el artistasi se encuentra, o si no se encuentra null
+     * Busca un Artist por su nombre y lo devuelve
+     * @param opcion El nombre del artista que queremos buscar
+     * @return El artista si se encuentra, o si no se encuentra null
      */
     public Artist obtenerArtistaPorNombre(String opcion) {
         for (Artist a : m.getMu().getArtistas()) {
@@ -88,10 +88,10 @@ public class Controller {
     }
 
     /**
-     *
+     * Genera una PlayList aleatoria, con el número de canciones indicado.
      * @param titulo el titulo de la playlist a generar
      * @param numCanciones el numero de canciones que tendrá
-     * @return la playlist aleatoria
+     * @return La playlist aleatoria
      */
     public PlayList generarPlaylistAleatoria(String titulo, int numCanciones) {
         PlayList plTemp = new PlayList();
@@ -106,9 +106,9 @@ public class Controller {
     }
 
     /**
-     *
-     * @param titulo el titulo de la playlist que queremos buscar
-     * @return la playlist si se encuentra, null si no se encuentra.
+     * Devuelve una PlayList tras buscarla por su nombre.
+     * @param titulo El titulo de la playlist que queremos buscar
+     * @return La playlist si se encuentra, null si no se encuentra.
      */
     public PlayList obtenerPlaylistPorNombre(String titulo) {
         for (PlayList p : this.m.getMu().getPlaylists()) {
@@ -120,7 +120,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Borra una Song (por su nombre) de una PlayList
      * @param plTemp la playlist de la cual queremos borrar una canción
      * @param nombreCancion el nombre de la canción a borrar
      * @return true si lo conseguimos, false si no
@@ -136,7 +136,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Devuelve una Song por su nombre.
      * @param nombreCancion el nombre de la canción que queremos buscar
      * @return la canción si se encuentra, null si no se encuentra
      */
@@ -150,13 +150,12 @@ public class Controller {
     }
 
     /**
-     *
+     * Añade una Song a una PlayList.
      * @param plTemp la playlist a la cual queremos añadir una cancion
      * @param songTmp la canción a añadir
      * @return true si lo consigue, false si no
      */
     public boolean anadirCancionAPlaylist(PlayList plTemp, Song songTmp) {
-        //TODO: Posiblemente rehacer esto.
         if (plTemp != null && songTmp != null) {
             for (PlayList p : this.m.getMu().getPlaylists()) {
                 if (p.equals(plTemp)) {
@@ -169,8 +168,8 @@ public class Controller {
     }
 
     /**
-     *
-     * @return pide al modelo que guarde los artistas en formato HTML, devuelve
+     * Hace que el modelo exporte los artistas en formato COL.
+     * @return Pide al modelo que guarde los artistas en formato COL, devuelve
      * true si lo consigue y false si no
      */
     public boolean pedirExportacionArtistas() {
@@ -196,8 +195,8 @@ public class Controller {
     }
 
     /**
-     *
-     * @param a el artista a añadir al modelo
+     * Añade un Artist al modelo.
+     * @param a El artista a añadir al modelo
      * @return true si se ha añadido, false si no
      */
     public boolean anadirArtistaAModelo(Artist a) {
@@ -209,8 +208,8 @@ public class Controller {
     }
 
     /**
-     *
-     * @param a el artista a borrar
+     * Borra un Artist del modelo.
+     * @param a El artista a borrar
      * @return true si se ha borrado, false si no
      */
     public boolean borrarArtista(Artist a) {
@@ -223,12 +222,12 @@ public class Controller {
     }
 
     /**
-     *
-     * @param a el artista del cual queremos cambiar un campo
-     * @param nuevoValor el nuevo valor del campo
-     * @param opcion un string que define que campo se cambia (1 = biografia, 2
+     * Cambia un atributo de un Artist, dependiendo de la elección previa del usuario.
+     * @param a El artista del cual queremos cambiar un campo
+     * @param nuevoValor El nuevo valor del campo
+     * @param opcion Un string que define que campo se cambia (1 = biografia, 2
      * = instagram, 3 = twitter, 4 = facebook, 5 = wikipedia)
-     * @return
+     * @return true si se ha cambiado, false si no
      */
     public boolean cambiarAtributoArtista(Artist a, String nuevoValor, String opcion) {
         if (a != null) {
@@ -256,8 +255,8 @@ public class Controller {
     }
 
     /**
-     *
-     * @param a el album a añadir al modelo
+     * Añade un Album al modelo.
+     * @param a El album a añadir al modelo
      * @return true si se añade, false si no
      */
     public boolean anadirAlbumAModelo(Album a) {
@@ -269,7 +268,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Añade un Song al modelo.
      * @param so la cancion a añadir al modelo
      * @return true si se añade, false si no
      */
@@ -282,9 +281,9 @@ public class Controller {
     }
 
     /**
-     *
-     * @param a el album que borrar del perfil de un artista
-     * @param ar el artista del cual queremos quitar el album
+     * Borra un Album de la lista de albumes de un Artist.
+     * @param a El album que borrar del perfil de un artista
+     * @param ar El artista del cual queremos quitar el album
      * @return true si se ha borrado, false si no
      */
     public boolean borrarAlbumDeArtista(Album a, Artist ar) {
@@ -296,7 +295,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Borra una Song del modelo.
      * @param s la canción a borrar
      * @return true si la canción era válida y se ha borrado, false si no
      */
@@ -309,8 +308,8 @@ public class Controller {
     }
 
     /**
-     *
-     * @param a el album a borrar
+     * Borra un Album del modelo.
+     * @param a El album a borrar
      * @return true si el album era válido y se ha borrado, false si no
      */
     public boolean borrarAlbumDeModelo(Album a) {
@@ -322,7 +321,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Cambia un atributo de un Album, según la elección previa del usuario.
      * @param a el album cuyo atributo queremos cambiar
      * @param nuevoValor el nuevo valor a darle
      * @param opcion un número que nos dirá que atributo se cambia (1 = titulo,
@@ -346,14 +345,14 @@ public class Controller {
     }
 
     /**
-     * vacía todo el modelo, usado para luego cargarlo aleatoriamente.
+     * Vacía todo el modelo, usado para luego cargarlo aleatoriamente.
      */
     public void vaciarColecciones() {
         m.vaciarColecciones();
     }
 
     /**
-     *
+     * Genera aleatoriamente los datos, según los datos en los .txt de aleatorio.
      * @param numArtistas el número de artistas a generar aleatoriamente
      * @param numAlbumes el número de albumes a generar aleatoriamente
      * @param numCanciones el número de canciones a generar aleatoriamente
@@ -415,7 +414,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Devuelve los Album del modelo.
      * @return retorna los albumes del modelo
      */
     public Iterable<Album> obtenerAlbumes() {
@@ -423,7 +422,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Devuelve los Artist del modelo.
      * @return retorna los artistas del modelo
      */
     public Iterable<Artist> obtenerArtistas() {
@@ -431,7 +430,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Devuelve las PlayList del modelo.
      * @return retorna las playlists del modelo
      */
     public Iterable<PlayList> obtenerPlaylists() {
@@ -439,7 +438,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Pide la exportación de los albumes a formato de tabla HTML.
      * @return true si se ha exportado, false si no.
      */
     public boolean pedirExportacionAlbumes() {

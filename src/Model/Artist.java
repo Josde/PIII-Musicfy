@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 /**
  *
- * @author jorgecruz@usal.es
+ * @author jorgecruz@usal.es (Jorge Cruz García, DNI: 21740040A)
  */
 public class Artist implements Serializable {
 

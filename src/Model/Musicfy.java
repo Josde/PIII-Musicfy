@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author jorgecruz@usal.es
+ * @author jorgecruz@usal.es (Jorge Cruz García, DNI: 21740040A)
  */
 public class Musicfy implements Serializable {
 

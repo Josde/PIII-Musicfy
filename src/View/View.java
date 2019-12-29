@@ -28,14 +28,14 @@ import java.util.ArrayList;
 
 /**
  *
- * @author jorgecruz@usal.es
+ * @author jorgecruz@usal.es (Jorge Cruz García, DNI: 21740040A)
  */
 public class View {
 
     Controller c = new Controller();
 
     /**
-     *
+     * Ejecuta el menú principal. Es básicamente la parte principal.
      * @param string El prompt a imprimirse con el menu.
      * @param opciones Las opciones que se pueden meter por teclado.
      */
@@ -223,7 +223,7 @@ public class View {
 
     private void imprimirCanciones() {
         ArrayList<Song> cancionesTemp = new ArrayList<Song>();
-        String header = format("%-45s | %-10s | %-10s", "Canción", "Duración", "Año");
+        String header = format("%-68s | %-15s | %-10s", "Canción", "Duración", "Año");
         c.sortCanciones();
         cancionesTemp = c.getCanciones();
         System.out.printf("%s\n", header);
@@ -398,7 +398,6 @@ public class View {
                     + "\n5. Wikipedia"
                     + "\nq. Volver atrás", opciones);
             switch (opcion) {
-                //TODO: Quizas habria que hacer esto desde el controlador? idk.
                 case "1":
                     System.out.printf("Biografia actual: %s\n", a.getBiografia());
                     nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
@@ -493,7 +492,6 @@ public class View {
         Song songTmp;
         System.out.println("\nAÑADIR CANCIÓN A PLAYLIST\n");
         titulo = Esdia.readString("Introduzca el nombre de la playlist: ");
-        //TODO: Sustituir esta obtencion de playlist por otro metodo que solo compruebe que existe, ya que solo necesitamos saber si existe.
         plTemp = c.obtenerPlaylistPorNombre(titulo);
         if (plTemp != null) {
             nombreCancion = Esdia.readString("Nombre de la canción a añadir: ");
@@ -509,7 +507,18 @@ public class View {
     }
 
     public void pedirImportacion() {
-        c.pedirImportacion();
+        int ret;
+        ret = c.pedirImportacion();
+        switch (ret) {
+            case 1: 
+                System.out.println("Musicfy importado desde archivos de texto.");
+                break;
+            case 2:
+                System.out.println("Musicfy importado desde archivo binario.");
+                break;
+            default:
+                System.out.println("Error en la importación");
+        }
     }
 
     public void runMenuFinal() {
