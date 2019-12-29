@@ -48,7 +48,6 @@ public class Auxiliar {
                 strTemp.add(tmpLine.trim());
             }
         } while (!tmpLine.isBlank());
-        sc.close();
         return strTemp;
     }
 
@@ -93,7 +92,7 @@ public class Auxiliar {
     }
 
     /**
-     * Modificación de anadirTag para usar th, el header de tabla de HTML
+     * modificación de anadirTag para usar th, el header de tabla de HTML
      *
      * @param sb
      * @param elemento
@@ -103,7 +102,7 @@ public class Auxiliar {
     }
 
     /**
-     * Modificación de anadirTag para usar td, el header de tabla de HTML
+     * modificación de anadirTag para usar td, el header de tabla de HTML
      *
      * @param sb
      * @param elemento

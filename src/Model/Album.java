@@ -24,7 +24,7 @@ import java.util.Calendar;
 import java.util.Random;
 /**
  *
- * @author jorgecruz@usal.es (Jorge Cruz García, DNI: 21740040A)
+ * @author jorgecruz@usal.es
  */
 
 public class Album implements Serializable {
@@ -215,6 +215,7 @@ public class Album implements Serializable {
         }
         a.setInterpretes(strArtistas);
         a.setAnno(Integer.valueOf(s[2]));
+        //TODO: Arreglar duración.
         a.setDuracion(s[3]);
         a.setNumCanciones(Integer.valueOf(s[4]));
         if (s[5].equals("álbum")) {
@@ -261,7 +262,7 @@ public class Album implements Serializable {
     }
 
     /**
-     * Devuelve un String[] con los datos del Album en el mismo orden que el factory.
+     *
      * @return String[] con los campos en el mismo orden que el factory.
      */
     public String[] toStringArray() {

@@ -25,7 +25,7 @@ import java.util.Random;
 
 /**
  *
- * @author jorgecruz@usal.es (Jorge Cruz García, DNI: 21740040A)
+ * @author jorgecruz@usal.es
  */
 public class Song implements Serializable {
 
@@ -159,7 +159,7 @@ public class Song implements Serializable {
                 sb.append(", "); //Ponemos una coma, si no es el último cantante.
             }
         }
-        ret = format("%-25s - %-40s | %-15s | %-10d", sb, this.titulo, this.duracion, this.anno);
+        ret = format("%-15s - %-30s | %-10s | %-10d", sb, this.titulo, this.duracion, this.anno);
         return ret;
     }
 

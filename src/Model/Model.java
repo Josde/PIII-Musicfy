@@ -40,7 +40,7 @@ import java.util.Random;
 
 /**
  *
- * @author jorgecruz@usal.es (Jorge Cruz García, DNI: 21740040A)
+ * @author jorgecruz@usal.es
  */
 public class Model {
 
@@ -51,19 +51,16 @@ public class Model {
      * el .bin, irá a los txt. Si no se pueden importar los .txt, la otra
      * función lanzará una excepción y se acabará el programa.
      */
-    public int importFromDisk() {
+    public void importFromDisk() {
         File musicfyBin = Other.Constants.RUTA_MUSICFY_BIN.toFile();
         if (musicfyBin.exists()) {
             try {
                 this.deserializarMusicfy(musicfyBin);
-                return 2;
-            } catch (Exception e) { //Si el archivo es invalido o cualquier otra cosa, importamos desde los txt.
+            } catch (IOException e) { //Si el archivo es invalido o cualquier otra cosa, importamos desde los txt.
                 this.importFromDiskTxt();
-                return 1;
             }
         } else { //Si el archivo binario directamente no existe, importamos desde los txt
             this.importFromDiskTxt();
-            return 1;
         }
     }
 
@@ -104,35 +101,23 @@ public class Model {
      * @param musicfyBin el archivo en el que guardarlo todo.
      */
     public void serializarMusicfy(File musicfyBin) {
-        FileOutputStream archivoSalida = null;
-        BufferedOutputStream bosSalida = null;
-        ObjectOutputStream salida = null;
         try {
-            archivoSalida = new FileOutputStream(musicfyBin);
-            bosSalida = new BufferedOutputStream(archivoSalida);
-            salida = new ObjectOutputStream(bosSalida);
+            FileOutputStream archivoSalida = new FileOutputStream(musicfyBin);
+            BufferedOutputStream bosSalida = new BufferedOutputStream(archivoSalida);
+            ObjectOutputStream salida = new ObjectOutputStream(bosSalida);
             salida.writeObject(this.mu);
+            salida.close();
+            archivoSalida.close();
         } catch (IOException i) {
             i.printStackTrace();
-        } finally {
-            try {
-                if (salida != null) salida.close();
-                if (bosSalida != null) bosSalida.close();
-                if (archivoSalida != null) archivoSalida.close();
-            } catch (IOException i) {
-                i.printStackTrace();
-            }
         }
     }
 
     void deserializarMusicfy(File musicfyBin) throws IOException {
-        FileInputStream archivoEntrada = null;
-        BufferedInputStream bosEntrada = null;
-        ObjectInputStream entrada = null;
         try {
-            archivoEntrada = new FileInputStream(musicfyBin);
-            bosEntrada = new BufferedInputStream(archivoEntrada);
-            entrada = new ObjectInputStream(bosEntrada);
+            FileInputStream archivoEntrada = new FileInputStream(musicfyBin);
+            BufferedInputStream bosEntrada = new BufferedInputStream(archivoEntrada);
+            ObjectInputStream entrada = new ObjectInputStream(bosEntrada);
             this.mu = (Musicfy) entrada.readObject();
             entrada.close();
             archivoEntrada.close();
@@ -140,14 +125,6 @@ public class Model {
             throw i;
         } catch (ClassNotFoundException c) {
             c.printStackTrace();
-        } finally {
-            try {
-                if (entrada != null) entrada.close();
-                if (bosEntrada != null) bosEntrada.close();
-                if (archivoEntrada != null) archivoEntrada.close();
-            } catch (IOException i) {
-                i.printStackTrace();
-            }
         }
     }
 
@@ -234,8 +211,6 @@ public class Model {
         for (Album a : this.getMu().getAlbumes()) {
             albumes.add(a.toStringArray());
         }
-        FileWriter fw = null;
-        BufferedWriter bw = null;
         try {
             if (!Constants.RUTA_ALBUMES_HTML.toFile().exists()) {
                 Files.createDirectories(Constants.RUTA_ALBUMES_HTML.getParent());
@@ -245,11 +220,11 @@ public class Model {
             if (!f.exists()) {
                 return false;
             }
-            fw = new FileWriter(f, false); // Creamos un fileWriter sin append para vaciar el archivo.
-            bw = new BufferedWriter(fw);
+            FileWriter fw = new FileWriter(f, false); // Creamos un fileWriter sin append para vaciar el archivo.
+            BufferedWriter bw = new BufferedWriter(fw);
             String[] header = {"Intérpretes", "Título", "Canciones", "Año", "Nº Canciones", "Duración", "Tipo"};
             StringBuilder sb = new StringBuilder();
-            Auxiliar.anadirTag(sb, "style", "table, td, th { border: 1px solid #000000 }");
+            sb.append("<style>\n table, td, th { border: 1px solid #000000 }\n</style>");
             sb.append("<table>");
             sb.append("<tr>");
             for (String h : header) {
@@ -265,6 +240,8 @@ public class Model {
             }
             sb.append("</table>");
             bw.write(sb.toString());
+            bw.close();
+            fw.close();
             return true;
         } catch (IOException i) {
             i.printStackTrace();
@@ -272,14 +249,6 @@ public class Model {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        } finally {
-            try {
-                if (bw != null) bw.close();
-                if (fw != null) fw.close();
-            } catch (IOException i) {
-                i.printStackTrace();
-                return false;
-            }
         }
     }
 
@@ -332,7 +301,7 @@ public class Model {
     }
 
     /**
-     * Vacía completamente las listas del Musicfy.
+     * Vacía completamente el Musicfy.
      */
     public void vaciarColecciones() {
         this.getMu().getArtistas().clear();
