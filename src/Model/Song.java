@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2019 jorgecruz@usal.es
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,12 +28,14 @@ import java.util.Random;
  * @author jorgecruz@usal.es
  */
 public class Song implements Serializable {
+
     private String titulo;
     private int anno;
     private String duracion;
     private ArrayList<String> interpretes;
 
     /**
+     * Constructor básico, solo le da valor al titulo y artistas.
      *
      * @param nombreArtista
      * @param s
@@ -45,6 +47,7 @@ public class Song implements Serializable {
     }
 
     /**
+     * Constructor con solo nombre, y el resto de valores aleatorios.
      *
      * @param nombreCancion
      */
@@ -54,6 +57,19 @@ public class Song implements Serializable {
         this.interpretes = new ArrayList<String>();
         this.setDuracionAleatoria(Constants.MINUTOS_MAX, Constants.MINUTOS_MIN);
         this.anno = r.nextInt(Calendar.getInstance().get(Calendar.YEAR) - Constants.ANO_MIN) + Constants.ANO_MIN;
+    }
+    /**
+     *
+     * @param titulo
+     * @param anno
+     * @param duracion
+     * @param interpretes
+     */
+    public Song(String titulo, int anno, String duracion, ArrayList<String> interpretes) {
+        this.titulo = titulo;
+        this.anno = anno;
+        this.duracion = duracion;
+        this.interpretes = interpretes;
     }
 
     /**
@@ -103,13 +119,14 @@ public class Song implements Serializable {
     public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
-    
+
     /**
+     * Le pone una duracion aleatoria a una canción.
      *
      * @param minutosMax
      * @param minutosMin
      */
-    public void setDuracionAleatoria(int minutosMax, int minutosMin) {
+    public final void setDuracionAleatoria(int minutosMax, int minutosMin) {
         Random r = new Random();
         int mins = (r.nextInt(minutosMax - 1)) + minutosMin;
         int secs = r.nextInt(60);
@@ -132,13 +149,11 @@ public class Song implements Serializable {
         this.interpretes = interpretes;
     }
 
-    
-
     @Override
     public String toString() {
         String ret;
         StringBuilder sb = new StringBuilder();
-        for (String a: this.interpretes) {
+        for (String a : this.interpretes) {
             sb.append(a);
             if (this.interpretes.indexOf(a) != this.interpretes.size() - 1) {
                 sb.append(", "); //Ponemos una coma, si no es el último cantante.
@@ -147,21 +162,6 @@ public class Song implements Serializable {
         ret = format("%-15s - %-30s | %-10s | %-10d", sb, this.titulo, this.duracion, this.anno);
         return ret;
     }
-    
-    /**
-     *
-     * @param titulo
-     * @param anno
-     * @param duracion
-     * @param interpretes
-     */
-    public Song(String titulo, int anno, String duracion, ArrayList<String> interpretes) {
-        this.titulo = titulo;
-        this.anno = anno;
-        this.duracion = duracion;
-        this.interpretes = interpretes;
-    }
-    
-    
-    
+
+
 }

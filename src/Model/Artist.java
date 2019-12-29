@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2019 jorgecruz@usal.es
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,12 +18,37 @@ package Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
  * @author jorgecruz@usal.es
  */
 public class Artist implements Serializable {
+
+    /**
+     * Factory de artista, el formato del String[] es: nombre, biografia,
+     * instagram, twitter, facebook, wikipedia, album1;album2...
+     *
+     * @param s
+     * @return
+     */
+    public static Artist factory(String[] s) {
+        Artist a = new Artist();
+        String[] strTmp;
+        ArrayList<String> albumes = new ArrayList<String>();
+        a.nombre = s[0];
+        a.biografia = s[1];
+        a.instagram = s[2];
+        a.twitter = s[3];
+        a.facebook = s[4];
+        a.wikipedia = s[5];
+        strTmp = s[6].split(";");
+        albumes.addAll(Arrays.asList(strTmp));
+        a.albumes = albumes;
+        return a;
+    }
+
     private String nombre;
     private String biografia;
     private String instagram;
@@ -33,6 +58,8 @@ public class Artist implements Serializable {
     private ArrayList<String> albumes;
 
     /**
+     * Constructor de artista solo con nombre y albumes, y el resto de campos
+     * por defecto.
      *
      * @param nombre
      * @param albumes
@@ -44,6 +71,25 @@ public class Artist implements Serializable {
         this.instagram = "@" + nombre + "_ig";
         this.twitter = "@" + nombre + "_tw";
         this.albumes = albumes;
+    }
+    /**
+     *
+     * @param nombre
+     */
+    public Artist(String nombre) {
+        this.nombre = nombre;
+        this.biografia = "Biografía no disponible";
+        this.facebook = "@" + nombre + "_fb";
+        this.instagram = "@" + nombre + "_ig";
+        this.twitter = "@" + nombre + "_tw";
+        this.albumes = new ArrayList<String>();
+
+    }
+    /**
+     * Constructor vacío; solo crea la lista para evitar NullPointerException.
+     */
+    public Artist() {
+        this.albumes = new ArrayList<String>();
     }
 
     /**
@@ -159,6 +205,7 @@ public class Artist implements Serializable {
     }
 
     /**
+     * Devuelve un String[] con el mismo orden que el factory.
      *
      * @return
      */
@@ -171,58 +218,13 @@ public class Artist implements Serializable {
         ret[3] = this.twitter;
         ret[4] = this.facebook;
         ret[5] = this.wikipedia;
-        for (String s: this.albumes) {
+        for (String s : this.albumes) {
             sb.append(s);
             sb.append(";");
         }
         ret[6] = sb.toString();
         return ret;
     }
-    
-    /**
-     *
-     * @param s
-     * @return
-     */
-    public static Artist factory(String[] s) {
-        Artist a = new Artist();
-        String[] strTmp; 
-        ArrayList<String> albumes = new ArrayList<String>();
-        a.nombre = s[0];
-        a.biografia = s[1];
-        a.instagram = s[2];
-        a.twitter = s[3];
-        a.facebook = s[4];
-        a.wikipedia = s[5];
-        strTmp = s[6].split(";");
-        for (String ss: strTmp) {
-            albumes.add(ss);
-        }
-        a.albumes = albumes;
-        return a;
-    }
 
-    /**
-     *
-     * @param nombre
-     */
-    public Artist(String nombre) {
-        this.nombre = nombre;
-        this.biografia = "Biografía no disponible";
-        this.facebook = "@" + nombre + "_fb";
-        this.instagram = "@" + nombre + "_ig";
-        this.twitter = "@" + nombre + "_tw";
-        this.albumes = new ArrayList<String>();
-        
-    }
 
-    /**
-     *
-     */
-    public Artist() { //Constructor vacío; solo aloca espacio para la lista.
-        this.albumes = new ArrayList<String>();
-    }
-    
-    
-    
 }

@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Other;
 
 import Model.Song;
@@ -25,6 +24,7 @@ import java.util.Comparator;
  * @author Jorge Cruz García (jorgecruz@usal.es)
  */
 public class ComparadorSong implements Comparator<Song> {
+
     @Override
     public int compare(Song o1, Song o2) {
         int orden;

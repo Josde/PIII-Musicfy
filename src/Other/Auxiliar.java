@@ -14,29 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Other;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import static java.lang.String.format;
+
 /**
  *
  * @author Jorge Cruz García (jorgecruz@usal.es)
  */
 public class Auxiliar {
-    
+
     /**
+     * Lee strings hasta que se presiona enter sin escribir nada.
      *
-     * @param prompt
-     * @return
+     * @param prompt el texto con el que se indica al usuario lo que hay que
+     * introducir
+     * @return un ArrayList con todos los Strings introducidos menos el último,
+     * que es uno vacío y no se devuelve
      */
     public static ArrayList<String> leerStringHastaVacio(String prompt) {
         ArrayList<String> strTemp = new ArrayList<String>();
@@ -45,17 +44,19 @@ public class Auxiliar {
         do {
             System.out.println(prompt);
             tmpLine = sc.nextLine();
-            if (!tmpLine.equals("")) {
+            if (!tmpLine.isBlank()) {
                 strTemp.add(tmpLine.trim());
             }
-        } while (!tmpLine.equals(""));
+        } while (!tmpLine.isBlank());
         return strTemp;
     }
 
     /**
+     * Modificación de readAllLines para que devuelva String[] en vez de una
+     * List
      *
-     * @param rutaALeer
-     * @return
+     * @param rutaALeer La ruta del archivo a leer
+     * @return String[] tal que cada elemento es una linea del archivo
      */
     public static String[] leerLineasEnArray(Path rutaALeer) {
         List<String> strTmp = new ArrayList<String>();
@@ -64,7 +65,7 @@ public class Auxiliar {
         }
         try {
             strTmp = Files.readAllLines(rutaALeer);
-            for (String ln: strTmp) {
+            for (String ln : strTmp) {
                 if (ln.isBlank()) {
                     strTmp.remove(ln);
                 }
@@ -75,12 +76,13 @@ public class Auxiliar {
             return null;
         }
     }
-    
+
     /**
+     * Función auxiliar para generar la tabla de HTML
      *
-     * @param sb
-     * @param tag
-     * @param elemento
+     * @param sb el StringBuilder donde tenemos nuestro contenido
+     * @param tag el tag HTML que añadir
+     * @param elemento el contenido de dentro del tag
      */
     public static void anadirTag(StringBuilder sb, String tag, String elemento) {
         sb.append("<").append(tag).append(">");
@@ -88,8 +90,9 @@ public class Auxiliar {
         sb.append("</").append(tag).append(">");
         sb.append("\n");
     }
-    
+
     /**
+     * modificación de anadirTag para usar th, el header de tabla de HTML
      *
      * @param sb
      * @param elemento
@@ -97,8 +100,9 @@ public class Auxiliar {
     public static void anadirHeader(StringBuilder sb, String elemento) {
         anadirTag(sb, "th", elemento);
     }
-    
+
     /**
+     * modificación de anadirTag para usar td, el header de tabla de HTML
      *
      * @param sb
      * @param elemento

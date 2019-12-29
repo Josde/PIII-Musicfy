@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2019 jorgecruz@usal.es
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  */
 package main;
 
-import Model.Model;
 import View.View;
 
 /**
@@ -24,21 +23,19 @@ import View.View;
  * @author jorgecruz@usal.es
  */
 public class Main {
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String[] args) {
         View v = new View();
         v.pedirImportacion();
         String[] opciones = {"1", "2", "3", "4", "5", "6", "q"};
-        v.runMenuPrincipal("1. Generación aleatoria" +
-                "\n2. Archivos" +
-                "\n3. Álbum" + 
-                "\n4. Artista" + 
-                "\n5. PlayList" +
-                "\n6. Canciones" +
-                "\nq. Salir", opciones);
-                v.runMenuFinal();
+        v.runMenuPrincipal("1. Generación aleatoria"
+                + "\n2. Archivos"
+                + "\n3. Álbum"
+                + "\n4. Artista"
+                + "\n5. PlayList"
+                + "\n6. Canciones"
+                + "\nq. Salir", opciones);
+        v.runMenuFinal();
     }
-    
+
 }

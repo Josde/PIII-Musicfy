@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2019 jorgecruz@usal.es
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,6 @@ package Model;
 import Other.Constants;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import static java.lang.String.format;
 import java.util.Calendar;
 import java.util.Random;
@@ -39,7 +37,7 @@ public class Album implements Serializable {
     private Tipo tipo;
 
     /**
-     *
+     * Constructor con 3 datos, y que rellena el resto de campos con valores pseudo aleatorios.
      * @param nombreArtista
      * @param nombreAlbum
      * @param canciones
@@ -67,7 +65,7 @@ public class Album implements Serializable {
     }
 
     /**
-     *
+     * Constructor de solo nombre, y el resto de cosas vacías y aleatorias.
      * @param nombreAlbum
      */
     public Album(String nombreAlbum) {
@@ -197,11 +195,10 @@ public class Album implements Serializable {
     public void setNumCanciones(int numCanciones) {
         this.numCanciones = numCanciones;
     }
-    
-    //TODO: Implementar los factories de album, artista y song.
 
     /**
-     *
+     * Factory de album, el formato del string[] es:
+     * titulo, artistas, año, duracion, nº canciones, tipo, cancion1;cancion2
      * @param s
      * @return
      */
@@ -210,7 +207,7 @@ public class Album implements Serializable {
         ArrayList<Song> canciones = new ArrayList<Song>();
         ArrayList<String> strArtistas = new ArrayList<String>();
         Song songTmp;
-        String[] strTmp;    
+        String[] strTmp;
         a.setTitulo(s[0]);
         strTmp = s[1].split(";");
         for (String str: strTmp) {
@@ -259,14 +256,14 @@ public class Album implements Serializable {
         } else {
             tipoTmp = "Sencillo";
         }
-        ret = format("%s - %s | %s | %s | %d canciones | %d\nCanciones:\n %s", sbArtistas, 
+        ret = format("%s - %s | %s | %s | %d canciones | %d\nCanciones:\n %s", sbArtistas,
                 this.titulo, this.duracion, tipoTmp, this.numCanciones, this.anno,  sbCanciones);
         return ret;
     }
 
     /**
      *
-     * @return
+     * @return String[] con los campos en el mismo orden que el factory.
      */
     public String[] toStringArray() {
         StringBuilder sbArtistas = new StringBuilder();
@@ -299,6 +296,6 @@ public class Album implements Serializable {
         ret[6] = tipoTmp;
         return ret;
     }
-    
-    
+
+
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2019 jorgecruz@usal.es
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,6 @@ import com.coti.tools.OpMat;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -37,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -45,18 +43,19 @@ import java.util.Random;
  * @author jorgecruz@usal.es
  */
 public class Model {
+
     Musicfy mu = new Musicfy();
-    //TODO: Añadir exportToDisk.
 
     /**
-     *
+     * Importa los datos del disco duro desde las carpetas. Si no puede importar
+     * el .bin, irá a los txt. Si no se pueden importar los .txt, la otra
+     * función lanzará una excepción y se acabará el programa.
      */
     public void importFromDisk() {
         File musicfyBin = Other.Constants.RUTA_MUSICFY_BIN.toFile();
         if (musicfyBin.exists()) {
             try {
                 this.deserializarMusicfy(musicfyBin);
-                System.out.println("Musicfy deserializado");
             } catch (IOException e) { //Si el archivo es invalido o cualquier otra cosa, importamos desde los txt.
                 this.importFromDiskTxt();
             }
@@ -64,9 +63,12 @@ public class Model {
             this.importFromDiskTxt();
         }
     }
-    
+
     /**
-     *
+     * Método secundario, que intenta importar los datos desde los .txt En el
+     * caso de que esto también falle, el programa no tendrá datos así que
+     * hacemos exit(). Si funciona, nuestro modelo habrá cargado todos los datos
+     * de los .txt de artistas y albumes.
      */
     public void importFromDiskTxt() {
         File albumesTxt = Other.Constants.RUTA_ALBUMES.toFile();
@@ -77,25 +79,26 @@ public class Model {
             ArrayList<Album> listaAlbum = new ArrayList<Album>();
             ArrayList<Artist> listaArtista = new ArrayList<Artist>();
             Album a;
-            for (String[] s: albumes) {
+            for (String[] s : albumes) {
                 a = Album.factory(s);
                 listaAlbum.add(a);
                 //Tambien añadimos cada cancion a la lista de canciones de Musicfy.
                 this.mu.anadirCanciones(a.getCanciones());
             }
-            for (String[] s: artistas) {
+            for (String[] s : artistas) {
                 listaArtista.add(Artist.factory(s));
             }
             this.mu.setAlbumes(listaAlbum);
             this.mu.setArtistas(listaArtista);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.exit(-1);
         }
     }
-    
+
     /**
+     * Guarda la clase musicfy al archivo .bin.
      *
-     * @param musicfyBin
+     * @param musicfyBin el archivo en el que guardarlo todo.
      */
     public void serializarMusicfy(File musicfyBin) {
         try {
@@ -119,17 +122,15 @@ public class Model {
             entrada.close();
             archivoEntrada.close();
         } catch (IOException i) {
-            System.err.println("Archivo musicfy.bin no encontrado o inválido.");
             throw i;
         } catch (ClassNotFoundException c) {
-            System.err.println("Clase no encontrada en el archivo binario.");
             c.printStackTrace();
-        } 
+        }
     }
 
     /**
      *
-     * @return
+     * @return el valor del Musicfy, donde están todos los datos
      */
     public Musicfy getMu() {
         return mu;
@@ -144,15 +145,16 @@ public class Model {
     }
 
     /**
-     *
+     * Ordena las canciones como está establecido en el comparador (por año y
+     * alfabéticamente)
      */
     public void sortCanciones() {
         Comparator<Song> c = new ComparadorSong();
         Collections.sort(this.mu.getCanciones(), c);
     }
-    
+
     /**
-     *
+     * Ordena los álbumes como está establecido en el comparador (por año)
      */
     public void sortAlbumes() {
         Comparator<Album> a = new ComparadorAlbum();
@@ -160,6 +162,7 @@ public class Model {
     }
 
     /**
+     * Añade una playlist al modelo
      *
      * @param plTemp
      */
@@ -168,8 +171,9 @@ public class Model {
     }
 
     /**
+     * Exporta los artistas al .col
      *
-     * @return
+     * @return true si se exportan, false si no
      */
     public boolean exportarArtistas() {
         ArrayList<String[]> artistas = new ArrayList<String[]>(); //Usamos arraylist porque el num de artistas es variable.
@@ -196,10 +200,11 @@ public class Model {
             return false;
         }
     }
-    
+
     /**
+     * Exporta los albumes a tabla HTML
      *
-     * @return
+     * @return true si los exporta, false si no
      */
     public boolean exportarAlbumes() {
         ArrayList<String[]> albumes = new ArrayList<String[]>(); //Usamos arraylist porque el num de artistas es variable.
@@ -212,7 +217,9 @@ public class Model {
                 Files.createFile(Constants.RUTA_ALBUMES_HTML);
             }
             File f = Constants.RUTA_ALBUMES_HTML.toFile();
-            if (!f.exists()) return false;
+            if (!f.exists()) {
+                return false;
+            }
             FileWriter fw = new FileWriter(f, false); // Creamos un fileWriter sin append para vaciar el archivo.
             BufferedWriter bw = new BufferedWriter(fw);
             String[] header = {"Intérpretes", "Título", "Canciones", "Año", "Nº Canciones", "Duración", "Tipo"};
@@ -224,9 +231,9 @@ public class Model {
                 Auxiliar.anadirHeader(sb, h);
             }
             sb.append("</tr>");
-            for (String[] s: albumes) {
+            for (String[] s : albumes) {
                 sb.append("<tr>");
-                for (String ss: s) {
+                for (String ss : s) {
                     Auxiliar.anadirDato(sb, ss);
                 }
                 sb.append("</tr>");
@@ -276,7 +283,7 @@ public class Model {
     public void anadirAlbum(Album a) {
         this.getMu().getAlbumes().add(a);
     }
-    
+
     /**
      *
      * @param so
@@ -294,7 +301,7 @@ public class Model {
     }
 
     /**
-     *
+     * Vacía completamente el Musicfy.
      */
     public void vaciarColecciones() {
         this.getMu().getArtistas().clear();
@@ -304,6 +311,10 @@ public class Model {
     }
 
     /**
+     * Ultimo paso en la generación aleatoria, que cruza los datos aleatorios y
+     * rellena los campos. Es una operación muy costosa ya que tenemos que hacer
+     * varios recorridos de nuestras listas. Esto se debe a que si no, existe la
+     * posibilidad de que queden albumes / canciones sin artista, etc.
      *
      * @param albumesTmp
      * @param cancionesTmp
@@ -312,7 +323,7 @@ public class Model {
      */
     public void correlacionarDatosYActualizarModelo(ArrayList<Album> albumesTmp, ArrayList<Song> cancionesTmp, ArrayList<Artist> artistasTmp, ArrayList<PlayList> playlistsTmp) {
         Random r = new Random();
-        for (Artist a: artistasTmp) {
+        for (Artist a : artistasTmp) {
             ArrayList<Album> albumes = new ArrayList<Album>();
             Album alb;
             int numAlbumes = r.nextInt(Constants.ALBUMES_MAX - 1) + 1;
@@ -324,7 +335,7 @@ public class Model {
                 albumes.add(alb);
             }
         }
-        for (Album a: albumesTmp) {
+        for (Album a : albumesTmp) {
             if (a.getInterpretes().isEmpty()) { // Si el álbum no tiene interprete, le asignamos uno.
                 Artist aTmp = artistasTmp.get(r.nextInt(artistasTmp.size()));
                 a.getInterpretes().add(aTmp.getNombre());
@@ -339,7 +350,7 @@ public class Model {
             }
             a.setCanciones(songTmp);
         }
-        for (PlayList p: playlistsTmp) {
+        for (PlayList p : playlistsTmp) {
             ArrayList<Song> listaCanciones = new ArrayList<Song>();
             Song cancion;
             int canciones = r.nextInt(Constants.LONG_PLAYLIST_MAX - 1) + 1;
@@ -349,7 +360,7 @@ public class Model {
             }
             p.setCanciones(listaCanciones);
         }
-        for (Song s: cancionesTmp) { //Ultimo bucle, se asegura de que no queden canciones sin interprete
+        for (Song s : cancionesTmp) { //Ultimo bucle, se asegura de que no queden canciones sin interprete
             if (s.getInterpretes().isEmpty()) {
                 s.getInterpretes().add(artistasTmp.get(r.nextInt(artistasTmp.size())).getNombre());
             }
@@ -358,9 +369,7 @@ public class Model {
         this.getMu().setArtistas(artistasTmp);
         this.getMu().setAlbumes(albumesTmp);
         this.getMu().setCanciones(cancionesTmp);
-        
+
     }
 
-    
-    
 }

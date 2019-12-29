@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2019 jorgecruz@usal.es
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,23 +16,15 @@
  */
 package Model;
 
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import Other.Constants;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
  * @author jorgecruz@usal.es
  */
 public class Musicfy implements Serializable {
+
     private ArrayList<Song> canciones = new ArrayList<Song>();
     private ArrayList<Album> albumes = new ArrayList<Album>();
     private ArrayList<Artist> artistas = new ArrayList<Artist>();
@@ -103,9 +95,9 @@ public class Musicfy implements Serializable {
     }
 
     void anadirCanciones(ArrayList<Song> canciones) {
-        for (Song s: canciones) {
+        for (Song s : canciones) {
             this.canciones.add(s);
         }
     }
-    
+
 }

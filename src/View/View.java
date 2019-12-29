@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2019 jorgecruz@usal.es
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,11 +31,12 @@ import java.util.ArrayList;
  * @author jorgecruz@usal.es
  */
 public class View {
+
     Controller c = new Controller();
 
     /**
      *
-     * @param string  El prompt a imprimirse con el menu.
+     * @param string El prompt a imprimirse con el menu.
      * @param opciones Las opciones que se pueden meter por teclado.
      */
     public void runMenuPrincipal(String string, String[] opciones) {
@@ -43,7 +44,7 @@ public class View {
         String opcion;
         do {
             opcion = Esdia.readString(string, opciones).toLowerCase();
-            switch(opcion) {
+            switch (opcion) {
                 case "1":
                     this.pedirGeneracionAleatoria();
                     break;
@@ -59,7 +60,7 @@ public class View {
                 case "5":
                     this.runMenuPlaylist();
                     break;
-                case "6": 
+                case "6":
                     this.imprimirCanciones();
                     break;
                 case "q":
@@ -68,7 +69,7 @@ public class View {
                 default:
                     System.out.println("Opción incorrecta");
             }
-        } while(!finish);
+        } while (!finish);
     }
 
     private void pedirGeneracionAleatoria() {
@@ -90,14 +91,14 @@ public class View {
 
     private void runMenuArchivos() {
         boolean finish = false;
-        String string = "1. Exportar artistas en formato encolumnado" + 
-                        "\n2. Exportar álbumes a tabla HTML" + 
-                        "\nq. Salir al menú principal";
+        String string = "1. Exportar artistas en formato encolumnado"
+                + "\n2. Exportar álbumes a tabla HTML"
+                + "\nq. Salir al menú principal";
         String[] opciones = {"1", "2", "q"};
         String opcion;
         do {
             opcion = Esdia.readString(string, opciones).toLowerCase();
-            switch(opcion) {
+            switch (opcion) {
                 case "1":
                     this.pedirExportacionArtistas();
                     break;
@@ -110,29 +111,29 @@ public class View {
                 default:
                     System.out.println("Opción incorrecta");
             }
-        } while(!finish);
+        } while (!finish);
     }
 
     private void runMenuAlbum() {
         boolean finish = false;
-        String string = "1. Añadir un álbum" + 
-                        "\n2. Borrar un álbum" + 
-                        "\n3. Modificar un álbum" + 
-                        "\n4. Consultar un álbum" + 
-                        "\n5. Imprimir nombres de álbumes" + 
-                        "\nq. Salir al menú principal";
+        String string = "1. Añadir un álbum"
+                + "\n2. Borrar un álbum"
+                + "\n3. Modificar un álbum"
+                + "\n4. Consultar un álbum"
+                + "\n5. Imprimir nombres de álbumes"
+                + "\nq. Salir al menú principal";
         String[] opciones = {"1", "2", "3", "4", "5", "q"};
         String opcion;
         do {
             opcion = Esdia.readString(string, opciones).toLowerCase();
-            switch(opcion) {
+            switch (opcion) {
                 case "1":
                     this.anadirAlbum();
                     break;
                 case "2":
                     this.borrarAlbum();
                     break;
-                case "3": 
+                case "3":
                     this.modificarAlbum();
                     break;
                 case "4":
@@ -147,29 +148,29 @@ public class View {
                 default:
                     System.out.println("Opción incorrecta");
             }
-        } while(!finish);
+        } while (!finish);
     }
 
     private void runMenuArtista() {
         boolean finish = false;
-        String string = "1. Añadir un artista" + 
-                        "\n2. Borrar un artista" + 
-                        "\n3. Modificar un artista" + 
-                        "\n4. Listado de albumes de un artista" + 
-                        "\n5. Imprimir nombres de artistas" + 
-                        "\nq. Salir al menú principal";
+        String string = "1. Añadir un artista"
+                + "\n2. Borrar un artista"
+                + "\n3. Modificar un artista"
+                + "\n4. Listado de albumes de un artista"
+                + "\n5. Imprimir nombres de artistas"
+                + "\nq. Salir al menú principal";
         String[] opciones = {"1", "2", "3", "4", "5", "q"};
         String opcion;
         do {
             opcion = Esdia.readString(string, opciones).toLowerCase();
-            switch(opcion) {
+            switch (opcion) {
                 case "1":
                     this.anadirArtista();
                     break;
                 case "2":
                     this.borrarArtista();
                     break;
-                case "3": 
+                case "3":
                     this.modificarArtista();
                     break;
                 case "4":
@@ -184,28 +185,28 @@ public class View {
                 default:
                     System.out.println("Opción incorrecta");
             }
-        } while(!finish);
+        } while (!finish);
     }
 
     private void runMenuPlaylist() {
         boolean finish = false;
-        String string = "1. Añadir una playlist" + 
-                        "\n2. Borrar una canción de una playlist" + 
-                        "\n3. Añadir una canción a una playlist" + 
-                        "\n4. Imprimir nombres de playlists" +
-                        "\nq. Salir al menú principal";
+        String string = "1. Añadir una playlist"
+                + "\n2. Borrar una canción de una playlist"
+                + "\n3. Añadir una canción a una playlist"
+                + "\n4. Imprimir nombres de playlists"
+                + "\nq. Salir al menú principal";
         String[] opciones = {"1", "2", "3", "4", "q"};
         String opcion;
         do {
             opcion = Esdia.readString(string, opciones).toLowerCase();
-            switch(opcion) {
+            switch (opcion) {
                 case "1":
                     this.anadirPlaylist();
                     break;
                 case "2":
                     this.borrarCancionDePlaylist();
                     break;
-                case "3": 
+                case "3":
                     this.anadirCancionAPlaylist();
                     break;
                 case "4":
@@ -217,7 +218,7 @@ public class View {
                 default:
                     System.out.println("Opción incorrecta");
             }
-        } while(!finish);
+        } while (!finish);
     }
 
     private void imprimirCanciones() {
@@ -226,10 +227,10 @@ public class View {
         c.sortCanciones();
         cancionesTemp = c.getCanciones();
         System.out.printf("%s\n", header);
-        for (Song cancion: cancionesTemp) {
+        for (Song cancion : cancionesTemp) {
             System.out.printf("%s\n", cancion.toString());
         }
-        
+
     }
 
     private void pedirExportacionArtistas() {
@@ -269,7 +270,7 @@ public class View {
         }
         nombreAlbum = Esdia.readString("Introduzca el nombre del album: ");
         cancionesStr = Auxiliar.leerStringHastaVacio("\nIntroduzca el nombre de una cancion, o enter para salir: ");
-        for (String s: cancionesStr) {
+        for (String s : cancionesStr) {
             Song so = new Song(nombreArtista, s);
             canciones.add(so);
             c.anadirCancionAModelo(so);
@@ -290,7 +291,7 @@ public class View {
             if (ar != null) {
                 c.borrarAlbumDeArtista(a, ar);
             }
-            for (Song s: a.getCanciones()) {
+            for (Song s : a.getCanciones()) {
                 c.borrarCancionDeModelo(s);
             }
             c.borrarAlbumDeModelo(a);
@@ -309,9 +310,9 @@ public class View {
         if (a != null) {
             System.out.println("Seleccione el campo que quiere modificar.\n");
             opcion = Esdia.readString("1. Título"
-                                    + "\n2. Año"
-                                    + "\nq. Volver atrás", opciones);
-            switch(opcion) {
+                    + "\n2. Año"
+                    + "\nq. Volver atrás", opciones);
+            switch (opcion) {
                 case "1":
                     System.out.printf("Título actual: %s\n", a.getTitulo());
                     nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
@@ -371,7 +372,7 @@ public class View {
                 System.out.printf("Artista \"%s\" borrado correctamente.\n", nombre);
             } else {
                 albumes = a.getAlbumes();
-                for (String s: albumes) {
+                for (String s : albumes) {
                     System.out.println(s);
                 }
                 System.out.printf("No se ha podido borrar el artista, ya que los álbumes indicados siguen dados de alta en la lista de álbumes.\n");
@@ -391,12 +392,12 @@ public class View {
         if (a != null) {
             System.out.println("Seleccione el campo que quiere modificar.\n");
             opcion = Esdia.readString("1. Biografía"
-                                    + "\n2. Instagram"
-                                    + "\n3. Twitter"
-                                    + "\n4. Facebook"
-                                    + "\n5. Wikipedia"
-                                    + "\nq. Volver atrás", opciones);
-            switch(opcion) {
+                    + "\n2. Instagram"
+                    + "\n3. Twitter"
+                    + "\n4. Facebook"
+                    + "\n5. Wikipedia"
+                    + "\nq. Volver atrás", opciones);
+            switch (opcion) {
                 //TODO: Quizas habria que hacer esto desde el controlador? idk.
                 case "1":
                     System.out.printf("Biografia actual: %s\n", a.getBiografia());
@@ -411,7 +412,7 @@ public class View {
                 case "3":
                     System.out.printf("Twitter actual: %s\n", a.getTwitter());
                     nuevoValor = Esdia.readString("Introduzca un nuevo valor para el campo: ");
-                    ret =  c.cambiarAtributoArtista(a, nuevoValor, opcion);
+                    ret = c.cambiarAtributoArtista(a, nuevoValor, opcion);
                     break;
                 case "4":
                     System.out.printf("Facebook actual: %s\n", a.getFacebook());
@@ -444,7 +445,7 @@ public class View {
         res = c.obtenerArtistaPorNombre(opcion);
         if (res != null) {
             System.out.printf("%s\n--------------------\n", opcion.toUpperCase());
-            for (String s: res.getAlbumes()) {
+            for (String s : res.getAlbumes()) {
                 System.out.printf("%s\n", s);
             }
         } else {
@@ -460,7 +461,7 @@ public class View {
         titulo = Esdia.readString("Introduzca el nombre de la playlist: ");
         numCanciones = Esdia.readInt("Introduzca el número de canciones: ");
         plTemp = c.generarPlaylistAleatoria(titulo, numCanciones);
-        if (plTemp != null){
+        if (plTemp != null) {
             System.out.printf("%s\n--------------------\n%s", "PLAYLIST CREADA: ", plTemp.toString());
         } else {
             System.out.println("Error al crear playlist.\n");
@@ -476,7 +477,7 @@ public class View {
         if (plTemp != null) {
             System.out.println(plTemp.toString());
             nombreCancion = Esdia.readString("Nombre de la canción a borrar: ");
-            if (c.borrarCancionPlaylist(plTemp, nombreCancion) == 1) {
+            if (c.borrarCancionPlaylist(plTemp, nombreCancion)) {
                 System.out.println("\nCanción borrada.\n");
             } else {
                 System.out.println("\nCanción no encontrada.\n");
@@ -507,16 +508,10 @@ public class View {
         }
     }
 
-    /**
-     *
-     */
     public void pedirImportacion() {
         c.pedirImportacion();
     }
 
-    /**
-     *
-     */
     public void runMenuFinal() {
         boolean opcion;
         opcion = Esdia.yesOrNo("Desea serializar Musicfy antes de salir?");
@@ -527,21 +522,21 @@ public class View {
 
     private void imprimirAlbumes() {
         System.out.println("\nARTISTAS Y NOMBRES DE TODOS LOS ALBUMES\n");
-        for (Album a: c.obtenerAlbumes()) {
+        for (Album a : c.obtenerAlbumes()) {
             System.out.printf("%s - %s\n", a.getInterpretes().toString(), a.getTitulo());
         }
     }
 
     private void imprimirArtistas() {
         System.out.println("\nNOMBRES DE TODOS LOS ARTISTAS\n");
-        for (Artist a: c.obtenerArtistas()) {
+        for (Artist a : c.obtenerArtistas()) {
             System.out.println(a.getNombre());
         }
     }
 
     private void imprimirPlaylists() {
         System.out.println("\nNOMBRES DE TODAS LAS PLAYLIST\n");
-        for (PlayList p: c.obtenerPlaylists()) {
+        for (PlayList p : c.obtenerPlaylists()) {
             System.out.println(p.getNombre());
         }
     }

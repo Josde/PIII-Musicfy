@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Model;
 
 /**
@@ -22,14 +21,6 @@ package Model;
  * @author Jorge Cruz García (jorgecruz@usal.es)
  */
 public enum Tipo {
-
-    /**
-     *
-     */
     SENCILLO,
-
-    /**
-     *
-     */
     ALBUM
 }

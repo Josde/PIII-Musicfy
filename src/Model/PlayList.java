@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2019 jorgecruz@usal.es
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,13 +17,15 @@
 package Model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import static java.lang.String.format;
+import java.util.ArrayList;
+
 /**
  *
  * @author jorgecruz@usal.es
  */
 public class PlayList implements Serializable {
+
     private String nombre;
     private ArrayList<Song> canciones = new ArrayList<Song>();
 
@@ -32,8 +34,8 @@ public class PlayList implements Serializable {
      * @param nombrePlaylist
      */
     public PlayList(String nombrePlaylist) {
-       this.nombre = nombrePlaylist;
-       this.canciones = new ArrayList<Song>();
+        this.nombre = nombrePlaylist;
+        this.canciones = new ArrayList<Song>();
     }
 
     /**
@@ -79,7 +81,7 @@ public class PlayList implements Serializable {
     public String toString() {
         String ret;
         StringBuilder sb = new StringBuilder();
-        for (Song s: this.canciones) {
+        for (Song s : this.canciones) {
             sb.append(s.toString());
             sb.append("\n");
         }
@@ -104,6 +106,5 @@ public class PlayList implements Serializable {
     public void borrarCancion(Song s) {
         this.canciones.remove(s);
     }
-    
-    
+
 }

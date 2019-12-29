@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package Other;
 
 import Model.Album;
@@ -25,6 +24,7 @@ import java.util.Comparator;
  * @author Jorge Cruz García (jorgecruz@usal.es)
  */
 public class ComparadorAlbum implements Comparator<Album> {
+
     @Override
     public int compare(Album o1, Album o2) {
         return Integer.compare(o1.getAnno(), o2.getAnno());
